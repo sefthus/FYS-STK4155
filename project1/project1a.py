@@ -14,6 +14,10 @@ from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split, KFold
 from sklearn.utils import shuffle
 
+import tools
+import regression_methods as regmet
+import CV_methods as cvmet
+
 np.random.seed(3155)
 #np.random.seed(2018)
 
@@ -48,103 +52,14 @@ def FrankePlot(x, y, z, ztilde=None):
 
     plt.show()
 
-def create_design_matrix(x, y, d=5):
-    """ create the design matrix of x and y with a polynomial of degree d """
-
-    x = x.ravel()
-    y = y.ravel()
-
-    N = len(x)
-    l = int((d+1)*(d+2)/2)
-    X = np.ones((N,l))
-
-    for i in range(1,d+1):
-        q = int(i*(i+1)/2)
-
-        for n in range(i+1):
-            X[:,q+n] = x**(i-n) * y**n
-    
-    return X
-
-def invert_matrix(X):
-    """ inverst matrix X through singular value decomposition"""
-    
-    U, s, Vt = np.linalg.svd(X)
-    Sigma = np.zeros((len(U),len(Vt)))
-
-    for i in range(0,len(Vt)):
-        Sigma[i,i] = s[i]
-    
-    Ut = U.T
-    V = Vt.T
-
-    # use pinv, not inv, which has rounding errors
-    Sigmainv = np.linalg.pinv(Sigma)
-    Xinv = np.matmul(V, np.matmul(Sigmainv,Ut))
-
-    # test if same result = True # REMEMBER TO CHANGE BACK
-    #Xinv = np.linalg.pinv(X)
-
-    return Xinv
-
-def MSE_func(ytrue, ypredict):
-    """ calculates the mean square error """
-
-    return np.sum((ytrue-ypredict)**2)/len(ytrue)
-
-def R2_score_func(ytrue, ypredict):
-    """ calculates the r2 score """
-
-    return 1 - (np.sum((ytrue-ypredict)**2)/np.sum((ytrue-np.mean(ytrue))**2))
-
-def plot_CI(param, param_var, print_CI = False, include_intercept=False):
-    """ plots the confidence intervals of the parameters at 95% confidence"""
-    """ parameter index vs parameter value """
-
-    error = 1.96*np.sqrt(param_var)
-
-    if print_CI:
-        print('CI_.95 beta:')
-        for i in range(len(param)):
-            print('   %.2f +- %.2f' % (param[i], error[i]))
-    if include_intercept:
-        indices = np.arange(0, len(param_var),1)
-    else: 
-        indices = np.arange(1, len(param_var)+1,1)
-        print('incc', indices)
-
-    plt.errorbar(indices, param, yerr=error, fmt='o', capsize=4, capthick=1.5)
-    plt.xlabel(r'$\beta$ - parameter index', size=14)
-    plt.ylabel(r'$\beta$ value', size=14)
-    plt.tick_params(axis='both', labelsize=12)
-    plt.grid('True', linestyle='--')
-    plt.tight_layout()
-    plt.show()
-
-def check_centering(y, yc):
-    """ tests that a variable have been properly mean centered"""
-    """ Standard deviation should be the same before and after centering"""
-    """ Mean of centered variable should be 0 """
-
-    if isinstance(y, (list, np.ndarray)):
-        print('|std(y) -std(yc)| : ', np.abs(np.sqrt(np.var(y, axis=0))-np.sqrt(np.var(yc,axis=0))))
-        print('mean(y) : ', np.mean(yc,axis=0))
-
-    else:
-        print('|std(y) -std(yc)| : ', np.abs(np.sqrt(np.var(y))-np.sqrt(np.var(yc))))
-        print('mean(y): ', np.mean(yc))
-
-def check_eq(list1, val): 
-    return(all(x == val for x in list1))
-
 def fit_data(X, z_noise, z_true, stddev=1, lmbda=0, normalize=False, center_var=True, include_intercept=False, test_centering=False, use_sklearn=False, reg_method=LinearRegression, plot_beta=False):
 
-    z_tilde, z_true, beta, varbeta = best_fit(X, z_noise, z_true, stddev, lmbda, normalize, center_var, include_intercept, test_centering, use_sklearn, reg_method)
-    mse_true = MSE_func(z_true, z_tilde)
-    mse_noise = MSE_func(z_noise, z_tilde)
+    z_tilde, z_true, beta, varbeta = regmet.best_fit(X, z_noise, z_true, stddev, lmbda, normalize, center_var, include_intercept, test_centering, use_sklearn, reg_method)
+    mse_true = tools.MSE_func(z_true, z_tilde)
+    mse_noise = tools.MSE_func(z_noise, z_tilde)
     print(' true Mean squared error =', mse_true)
     print(' noise Mean squared error =', mse_noise)
-    print(' R2 score           =', R2_score_func(z_true, z_tilde))
+    print(' R2 score           =', tools.R2_score_func(z_true, z_tilde))
     #print(' R2 score sklearn =', r2_score(z1_true,z_tilde)) # same value
 
     if plot_beta:
@@ -265,7 +180,7 @@ def main():
     #z1_noise = z.ravel() + np.random.randn(n)
 
     print(' make design matrix')
-    X = create_design_matrix(x, y, d=5)
+    X = tools.create_design_matrix(x, y, d=5)
 
     # ----------- OLS-------------------
     print('--------------- OLS ----------------------')
@@ -279,8 +194,8 @@ def main():
     fit_data(X[:,1:], z1_noise, z1_true, stddev, center_var=True, include_intercept=True, use_sklearn=True, reg_method=LinearRegression)
 
     print('   ------------- cross validating')
-    kfold_CV(X[:,1:], z1_noise, z1_true) # same result when using same random_state=0 in Kfold and shuffle
-    #kfold_CV_sklearn(X[:,1:], z1_noise, z1_true, reg_method=LinearRegression) # same result when using same random_state=0 in Kfold and shuffle
+    cvmet.kfold_CV(X[:,1:], z1_noise, z1_true) # same result when using same random_state=0 in Kfold and shuffle
+    #cvmet.kfold_CV_sklearn(X[:,1:], z1_noise, z1_true, reg_method=LinearRegression) # same result when using same random_state=0 in Kfold and shuffle
     
     #FrankePlot(x,y,z,z_tilde_cm)
     print('   ---------- finding best fit polynomial')
@@ -295,7 +210,7 @@ def main():
     #fit_data(X[:,1:], z1_noise, z1_true, stddev, lmbda=1e-3, center_var=True, include_intercept=False, use_sklearn=False, reg_method=Ridge)
   
     print('    ---------- cross-validating')
-    #kfold_CV(X[:,1:], z1_noise, z1_true, lmbda=1e-3)
+    #cvmet.kfold_CV(X[:,1:], z1_noise, z1_true, lmbda=1e-3)
 
     #bias_variance_tradeoff(x1, y1, z1_noise, z1_true, 14,lmbda=1e-3, cv_func=kfold_CV, reg_method=Ridge)
     #bias_variance_tradeoff(x1, y1, z1_noise, z1_true, 14,lmbda=1e-3,cv_func=kfold_CV_sklearn, reg_method=Ridge)

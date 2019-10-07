@@ -42,7 +42,6 @@ def invert_matrix(X):
 
     return Xinv
 
-
 def MSE_func(ytrue, ypredict):
     """ calculates the mean square error """
 
@@ -52,3 +51,20 @@ def R2_score_func(ytrue, ypredict):
     """ calculates the r2 score """
 
     return 1 - (np.sum((ytrue-ypredict)**2)/np.sum((ytrue-np.mean(ytrue))**2))
+
+def check_centering(y, yc):
+    """ tests that a variable have been properly mean centered"""
+    """ Standard deviation should be the same before and after centering"""
+    """ Mean of centered variable should be 0 """
+
+    if isinstance(y, (list, np.ndarray)):
+        print('|std(y) -std(yc)| : ', np.abs(np.sqrt(np.var(y, axis=0))-np.sqrt(np.var(yc,axis=0))))
+        print('mean(y) : ', np.mean(yc,axis=0))
+
+    else:
+        print('|std(y) -std(yc)| : ', np.abs(np.sqrt(np.var(y))-np.sqrt(np.var(yc))))
+        print('mean(y): ', np.mean(yc))
+
+def check_eq(list1, val): 
+    return(all(x == val for x in list1))
+
