@@ -1,0 +1,13 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Method}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Implementation}{section.2}% 3
+\BOOKMARK [1][-]{section.3}{Results}{}% 4
+\BOOKMARK [2][-]{subsection.3.1}{a\)}{section.3}% 5
+\BOOKMARK [2][-]{subsection.3.2}{b\) Resampling}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.3}{c\) Bias-Variance tradeoff}{section.3}% 7
+\BOOKMARK [3][-]{subsubsection.3.3.1}{1}{subsection.3.3}% 8
+\BOOKMARK [3][-]{subsubsection.3.3.2}{2}{subsection.3.3}% 9
+\BOOKMARK [2][-]{subsection.3.4}{d\) Ridge regression}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.5}{e\) Lasso regression}{section.3}% 11
+\BOOKMARK [1][-]{section.4}{Discussion}{}% 12
+\BOOKMARK [1][-]{section.5}{Conclusion}{}% 13

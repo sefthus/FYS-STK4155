@@ -1,0 +1,14 @@
+\babel@toc {english}{}
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}% 
+\contentsline {section}{\numberline {2}Method}{3}{section.2}% 
+\contentsline {subsection}{\numberline {2.1}Implementation}{3}{subsection.2.1}% 
+\contentsline {section}{\numberline {3}Results}{3}{section.3}% 
+\contentsline {subsection}{\numberline {3.1}a)}{3}{subsection.3.1}% 
+\contentsline {subsection}{\numberline {3.2}b) Resampling}{4}{subsection.3.2}% 
+\contentsline {subsection}{\numberline {3.3}c) Bias-Variance tradeoff}{4}{subsection.3.3}% 
+\contentsline {subsubsection}{\numberline {3.3.1}1}{4}{subsubsection.3.3.1}% 
+\contentsline {subsubsection}{\numberline {3.3.2}2}{4}{subsubsection.3.3.2}% 
+\contentsline {subsection}{\numberline {3.4}d) Ridge regression}{5}{subsection.3.4}% 
+\contentsline {subsection}{\numberline {3.5}e) Lasso regression}{9}{subsection.3.5}% 
+\contentsline {section}{\numberline {4}Discussion}{9}{section.4}% 
+\contentsline {section}{\numberline {5}Conclusion}{9}{section.5}% 
