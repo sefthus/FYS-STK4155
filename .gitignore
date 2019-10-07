@@ -75,11 +75,11 @@ Thumbs.db
 build-*/*
 
 # tex files
-**/*.tex
-**/*.blg
-**/*.bbl
-**/*.aux
-**/*.log
-**/*.out
-**/*.gz
-**/*.tc
+/**/*.tex
+/**/*.blg
+/**/*.bbl
+/**/*.aux
+/**/*.log
+/**/*.out
+/**/*.gz
+/**/*.tc
