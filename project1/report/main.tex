@@ -372,7 +372,7 @@ $MSE(\bm{z}^\mathrm{noise,test}, \bm{\tilde z}) = 1.19$,
 which should be the irreducible error variance, that is, $\sigma^2$, which in our case we had chosen as 1, so this too is a good result.
 
 
-\subsubsection{ Bias-Variance tradeoff}
+\subsubsection{ Bias-Variance trade-off}
 We try to create a figure similar to Figure 2.11 of Hastie, Tibshirani, and Friedman, which shows the test and training error as a function of the complexity of the model. In our case, the complexity is the polynomial degree.
 
 To reproduce this figure, we will pretend we do not know the true model, and use the noisy data alone. We then get the diagram in Figure \ref{fig:2}. Lowest MSE is still found at the 5th polynomial order, like before. Here we see that the test error reaches a minimum, but the training error continuously decreases.
@@ -384,7 +384,7 @@ To reproduce this figure, we will pretend we do not know the true model, and use
  	\label{fig:2}
  \end{figure}
 
-If we instead calculate the MSE based on the real data, we get Figure \ref{fig:2a}. Here too we see that the 5th order polynomial fits the data the best.
+If we instead calculate the MSE based on the real data, we get Figure \ref{fig:2b}. Here too we see that the 5th order polynomial fits the data the best.
  \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.6]{c_OLSerr_train_test_vs_pdegree_no_noise.pdf}
