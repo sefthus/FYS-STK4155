@@ -348,7 +348,6 @@ Here we show the results of our regression analyses on the Franke function, and 
 \subsection{The Franke function}
 The best fit polynomial order, $\lambda$, the minimum predictive error MSE, and $R^2$ for each of the regression models, including cross-validation, can be found in Table \ref{tab:1}. This will be discussed at the end of this section, but first we will go through the intermediate results.
 
-ADD 3D IMAGE?\\\newline
 Having produced the true and noisy data as stated in Section \ref{sec:implementation}, we start by fitting a 5th order polynomial to \code{z1\_noise}. Unless stated otherwise, assume $\bm{X}$ is standardized, and $\bm{z}^{noise}$ is mean-centered.
 
 For an Ordinary Least squares analysis, the $\beta$ parameters along with their confidence intervals at 95\%, can be seen in Figure \ref{fig:1}. We see that the confidence intervals are quite large in places, but we were not able to ascertain as to why.
@@ -374,7 +373,7 @@ which should be the irreducible error variance, that is, $\sigma^2$, which in ou
 
 
 \subsubsection{ Bias-Variance tradeoff}
-We try to create a figure similar to Figure 2.11 of Hastie, Tibshirani, and Friedman. SOURCE PROPERLY, which shows the test and training error as a function of the complexity of the model. In our case, the complexity is the polynomial degree.
+We try to create a figure similar to Figure 2.11 of Hastie, Tibshirani, and Friedman, which shows the test and training error as a function of the complexity of the model. In our case, the complexity is the polynomial degree.
 
 To reproduce this figure, we will pretend we do not know the true model, and use the noisy data alone. We then get the diagram in Figure \ref{fig:2}. Lowest MSE is still found at the 5th polynomial order, like before. Here we see that the test error reaches a minimum, but the training error continuously decreases.
  

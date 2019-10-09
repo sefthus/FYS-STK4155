@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.5.2)  9 OCT 2019 14:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.5.2)  9 OCT 2019 14:59
 entering extended mode
 **./main.tex
 (main.tex
@@ -1010,10 +1010,6 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 305.
 
 [6] [7]
-Underfull \hbox (badness 10000) in paragraph at lines 351--353
-
- []
-
 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/a_CI_
 betaOLS_st_wb0.pdf, id=183, 462.52798pt x 346.89601pt>
 File: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
@@ -1021,10 +1017,10 @@ a_CI_betaOLS_st_wb0.pdf Graphic file (type pdf)
 <use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/a
 _CI_betaOLS_st_wb0.pdf>
 Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
-ct1/report/figures/a_CI_betaOLS_st_wb0.pdf  used on input line 358.
+ct1/report/figures/a_CI_betaOLS_st_wb0.pdf  used on input line 357.
 (pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
-[8 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/a_
-CI_betaOLS_st_wb0.pdf>]
+ [8 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/a
+_CI_betaOLS_st_wb0.pdf>]
 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/c_OLS
 err_train_test_vs_pdegree.pdf, id=229, 462.52798pt x 346.89601pt>
 File: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
@@ -1032,11 +1028,11 @@ c_OLSerr_train_test_vs_pdegree.pdf Graphic file (type pdf)
 <use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/c
 _OLSerr_train_test_vs_pdegree.pdf>
 Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
-ct1/report/figures/c_OLSerr_train_test_vs_pdegree.pdf  used on input line 383.
+ct1/report/figures/c_OLSerr_train_test_vs_pdegree.pdf  used on input line 382.
 (pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
 
 
-LaTeX Warning: Reference `fig:2a' on page 9 undefined on input line 388.
+LaTeX Warning: Reference `fig:2a' on page 9 undefined on input line 387.
 
 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/c_OLS
 err_train_test_vs_pdegree_no_noise.pdf, id=230, 462.52798pt x 346.89601pt>
@@ -1046,7 +1042,7 @@ c_OLSerr_train_test_vs_pdegree_no_noise.pdf Graphic file (type pdf)
 _OLSerr_train_test_vs_pdegree_no_noise.pdf>
 Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
 ct1/report/figures/c_OLSerr_train_test_vs_pdegree_no_noise.pdf  used on input l
-ine 391.
+ine 390.
 (pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
 [9 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/c_
 OLSerr_train_test_vs_pdegree.pdf>]
@@ -1057,7 +1053,7 @@ d_Ridge_MSE_pdegree_lmbda.pdf Graphic file (type pdf)
 <use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/d
 _Ridge_MSE_pdegree_lmbda.pdf>
 Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
-ct1/report/figures/d_Ridge_MSE_pdegree_lmbda.pdf  used on input line 404.
+ct1/report/figures/d_Ridge_MSE_pdegree_lmbda.pdf  used on input line 403.
 (pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
  [10 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
 c_OLSerr_train_test_vs_pdegree_no_noise.pdf>]
@@ -1068,7 +1064,7 @@ d_Ridge_MSE_pdegree_lmbda_close.pdf Graphic file (type pdf)
 <use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/d
 _Ridge_MSE_pdegree_lmbda_close.pdf>
 Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
-ct1/report/figures/d_Ridge_MSE_pdegree_lmbda_close.pdf  used on input line 411.
+ct1/report/figures/d_Ridge_MSE_pdegree_lmbda_close.pdf  used on input line 410.
 
 (pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/d_lam
@@ -1078,7 +1074,7 @@ d_lambda_vs_err_d5_close.pdf Graphic file (type pdf)
 <use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/d
 _lambda_vs_err_d5_close.pdf>
 Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
-ct1/report/figures/d_lambda_vs_err_d5_close.pdf  used on input line 419.
+ct1/report/figures/d_lambda_vs_err_d5_close.pdf  used on input line 418.
 (pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
 [11 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/d
 _Ridge_MSE_pdegree_lmbda.pdf> <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155
@@ -1095,7 +1091,7 @@ d_Ridge_err_pdegree.pdf Graphic file (type pdf)
 <use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/d
 _Ridge_err_pdegree.pdf>
 Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
-ct1/report/figures/d_Ridge_err_pdegree.pdf  used on input line 436.
+ct1/report/figures/d_Ridge_err_pdegree.pdf  used on input line 435.
 (pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
  [12 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
 d_lambda_vs_err_d5_close.pdf> <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155
@@ -1112,7 +1108,7 @@ e_Lasso_MSE_pdegree_lmbda.pdf Graphic file (type pdf)
 <use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/e
 _Lasso_MSE_pdegree_lmbda.pdf>
 Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
-ct1/report/figures/e_Lasso_MSE_pdegree_lmbda.pdf  used on input line 453.
+ct1/report/figures/e_Lasso_MSE_pdegree_lmbda.pdf  used on input line 452.
 (pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/e_lam
 bda_vs_err_d5.pdf, id=486, 462.52798pt x 346.89601pt>
@@ -1121,7 +1117,7 @@ e_lambda_vs_err_d5.pdf Graphic file (type pdf)
 <use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/e
 _lambda_vs_err_d5.pdf>
 Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
-ct1/report/figures/e_lambda_vs_err_d5.pdf  used on input line 460.
+ct1/report/figures/e_lambda_vs_err_d5.pdf  used on input line 459.
 (pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
  [13 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
 e_Lasso_MSE_pdegree_lmbda.pdf>]
@@ -1132,7 +1128,7 @@ terrain_cut.pdf Graphic file (type pdf)
 <use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/t
 errain_cut.pdf>
 Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
-ct1/report/figures/terrain_cut.pdf  used on input line 470.
+ct1/report/figures/terrain_cut.pdf  used on input line 469.
 (pdftex.def)             Requested size: 231.26341pt x 173.44757pt.
 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/terra
 in_cut_sample.pdf, id=536, 462.52798pt x 346.89601pt>
@@ -1141,7 +1137,7 @@ terrain_cut_sample.pdf Graphic file (type pdf)
 <use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/t
 errain_cut_sample.pdf>
 Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
-ct1/report/figures/terrain_cut_sample.pdf  used on input line 471.
+ct1/report/figures/terrain_cut_sample.pdf  used on input line 470.
 (pdftex.def)             Requested size: 231.26341pt x 173.44757pt.
  [14 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
 e_lambda_vs_err_d5.pdf> <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
@@ -1157,7 +1153,7 @@ pdfTeX warning: pdflatex.exe (file C:/Users/elini/Documents/FYS-STK4155/FYS-STK
 4155/project1/report/figures/terrain_cut_sample.pdf): PDF inclusion: multiple p
 dfs with page group included in a single page
 >]
-Overfull \hbox (11.38077pt too wide) in paragraph at lines 479--480
+Overfull \hbox (11.38077pt too wide) in paragraph at lines 478--479
 []\OT1/cmr/m/n/10 We first per-formed an Or-di-nary Least Squares re-gres-sion 
 anal-y-sis, which in-cluded Cross-Validation.
  []
@@ -1169,7 +1165,7 @@ g_OLS_err_pdegree_c1000s40.pdf Graphic file (type pdf)
 <use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/g
 _OLS_err_pdegree_c1000s40.pdf>
 Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
-ct1/report/figures/g_OLS_err_pdegree_c1000s40.pdf  used on input line 486.
+ct1/report/figures/g_OLS_err_pdegree_c1000s40.pdf  used on input line 485.
 (pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/g_Rid
 ge_MSE_pdegree_lmbda.pdf, id=611, 462.52798pt x 346.89601pt>
@@ -1178,7 +1174,7 @@ g_Ridge_MSE_pdegree_lmbda.pdf Graphic file (type pdf)
 <use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/g
 _Ridge_MSE_pdegree_lmbda.pdf>
 Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
-ct1/report/figures/g_Ridge_MSE_pdegree_lmbda.pdf  used on input line 501.
+ct1/report/figures/g_Ridge_MSE_pdegree_lmbda.pdf  used on input line 500.
 (pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
 [15 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/g
 _OLS_err_pdegree_c1000s40.pdf>]
@@ -1189,14 +1185,14 @@ g_Ridge_lambda_vs_err_d10.pdf Graphic file (type pdf)
 <use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/g
 _Ridge_lambda_vs_err_d10.pdf>
 Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
-ct1/report/figures/g_Ridge_lambda_vs_err_d10.pdf  used on input line 509.
+ct1/report/figures/g_Ridge_lambda_vs_err_d10.pdf  used on input line 508.
 (pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
 File: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
 g_Ridge_lambda_vs_err_d10.pdf Graphic file (type pdf)
 <use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/g
 _Ridge_lambda_vs_err_d10.pdf>
 Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
-ct1/report/figures/g_Ridge_lambda_vs_err_d10.pdf  used on input line 519.
+ct1/report/figures/g_Ridge_lambda_vs_err_d10.pdf  used on input line 518.
 (pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
  [16 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
 g_Ridge_MSE_pdegree_lmbda.pdf> <C:/Users/elini/Documents/FYS-STK4155/FYS-STK415
@@ -1207,7 +1203,7 @@ pdfTeX warning: pdflatex.exe (file C:/Users/elini/Documents/FYS-STK4155/FYS-STK
 tiple pdfs with page group included in a single page
 >] [17]
 ! Extra }, or forgotten $.
-l.575 ... easier estimating a good $\bm{\tilde y}}
+l.574 ... easier estimating a good $\bm{\tilde y}}
                                                   $.
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -1216,12 +1212,12 @@ the way to recover is to insert both the forgotten and the
 deleted material, e.g., by typing `I$}'.
 
 [18] (main.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 589.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 588.
  [19]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 589.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 588.
  (main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 589.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 589.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 588.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 588.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: A090FF66BE314B5A8514F7542AD2E28B;1390.
 
@@ -1254,7 +1250,7 @@ ublic/amsfonts/cm/cmr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
 onts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
 cmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb
 ><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on main.pdf (19 pages, 563366 bytes).
+Output written on main.pdf (19 pages, 562825 bytes).
 PDF statistics:
  839 PDF objects out of 1000 (max. 8388607)
  80 named destinations out of 1000 (max. 500000)
