@@ -19,30 +19,66 @@
 \providecommand\HyField@AuxAddToCoFields[2]{}
 \providecommand \oddpage@label [2]{}
 \babel@aux{english}{}
+\citation{Franke}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{3}{section.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {2}Method}{3}{section.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Implementation}{3}{subsection.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3}Results}{3}{section.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}a)}{3}{subsection.3.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The values of the parameters $\beta $ found from an Ordinary Least Squares fitting, are shown on the $y$-axis, while the index of the parameters are on the $x$-axis. The errorbars are calculated at 95\% confidence\relax }}{3}{figure.caption.2}\protected@file@percent }
+\newlabel{sec:method}{{2}{3}{Method}{section.2}{}}
+\newlabel{eq:y_tilde}{{3}{3}{Method}{equation.2.3}{}}
+\newlabel{eq:design_matrix}{{4}{3}{Method}{equation.2.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.0.1}Decomposing the cost function}{4}{subsubsection.2.0.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Ordinary Least Squares regression}{5}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Ridge and Lasso regression}{6}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Implementation}{6}{subsection.2.3}\protected@file@percent }
+\newlabel{sec:implementation}{{2.3}{6}{Implementation}{subsection.2.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.1}$k$-fold Cross-Validation}{7}{subsubsection.2.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.2}Standardizing the data}{7}{subsubsection.2.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.3}Linear regression}{7}{subsubsection.2.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Results}{8}{section.3}\protected@file@percent }
+\newlabel{sec:results}{{3}{8}{Results}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}The Franke function}{8}{subsection.3.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The values of the parameters $\beta $ found from an Ordinary Least Squares regression analysis, are shown on the $y$-axis, while the index of the parameters are on the $x$-axis. The errorbars are calculated at 95\% confidence\relax }}{8}{figure.caption.2}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig:1}{{1}{3}{The values of the parameters $\beta $ found from an Ordinary Least Squares fitting, are shown on the $y$-axis, while the index of the parameters are on the $x$-axis. The errorbars are calculated at 95\% confidence\relax }{figure.caption.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}b) Resampling}{4}{subsection.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}c) Bias-Variance tradeoff}{4}{subsection.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.1}1}{4}{subsubsection.3.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.2}2}{4}{subsubsection.3.3.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces The training and test MSE for increasing model complexity, using Ordinary Least Squares and $k$-fold Cross Validation. While the test error reaches a minimum before increasing again, the training error will continuously decrease with increasing complexity.\relax }}{5}{figure.caption.3}\protected@file@percent }
-\newlabel{fig:2}{{2}{5}{The training and test MSE for increasing model complexity, using Ordinary Least Squares and $k$-fold Cross Validation. While the test error reaches a minimum before increasing again, the training error will continuously decrease with increasing complexity.\relax }{figure.caption.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}d) Ridge regression}{5}{subsection.3.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces The MSE, calculated using the true model, for the test data for various $\lambda $ values, while using cross validation. The minimum MSE value has been marked by a yellow $\times $.\relax }}{6}{figure.caption.4}\protected@file@percent }
-\newlabel{fig:3}{{3}{6}{The MSE, calculated using the true model, for the test data for various $\lambda $ values, while using cross validation. The minimum MSE value has been marked by a yellow $\times $.\relax }{figure.caption.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces The training and test MSE for increasing model complexity, using Ridge regression and $k$-fold Cross Validation. While the test error reaches a minimum before increasing again, the training error will continuously decrease with increasing complexity.\relax }}{7}{figure.caption.5}\protected@file@percent }
-\newlabel{fig:4}{{4}{7}{The training and test MSE for increasing model complexity, using Ridge regression and $k$-fold Cross Validation. While the test error reaches a minimum before increasing again, the training error will continuously decrease with increasing complexity.\relax }{figure.caption.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces The MSE, calculated using the true model, for the test data for various $\lambda $ values and polynomial degrees, while using cross validation. The minimum MSE value has been marked by a yellow $\times $.\relax }}{8}{figure.caption.6}\protected@file@percent }
-\newlabel{fig:5}{{5}{8}{The MSE, calculated using the true model, for the test data for various $\lambda $ values and polynomial degrees, while using cross validation. The minimum MSE value has been marked by a yellow $\times $.\relax }{figure.caption.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces The MSE, calculated using the true model, for the test and training data for various $\lambda $ values, while using cross validation, for a fifth order polynomial. The minimum MSE value has been marked by a yellow $\times $.\relax }}{8}{figure.caption.7}\protected@file@percent }
-\newlabel{fig:6}{{6}{8}{The MSE, calculated using the true model, for the test and training data for various $\lambda $ values, while using cross validation, for a fifth order polynomial. The minimum MSE value has been marked by a yellow $\times $.\relax }{figure.caption.7}{}}
+\newlabel{fig:1}{{1}{8}{The values of the parameters $\beta $ found from an Ordinary Least Squares regression analysis, are shown on the $y$-axis, while the index of the parameters are on the $x$-axis. The errorbars are calculated at 95\% confidence\relax }{figure.caption.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.1}Cross-validating}{9}{subsubsection.3.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.2} Bias-Variance tradeoff}{9}{subsubsection.3.1.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces The training and test MSE for increasing model complexity, using Ordinary Least Squares and $k$-fold Cross Validation and the noisy dataset. While the test error reaches a minimum before increasing again, the training error will continuously decrease with increasing complexity.\relax }}{9}{figure.caption.3}\protected@file@percent }
+\newlabel{fig:2}{{2}{9}{The training and test MSE for increasing model complexity, using Ordinary Least Squares and $k$-fold Cross Validation and the noisy dataset. While the test error reaches a minimum before increasing again, the training error will continuously decrease with increasing complexity.\relax }{figure.caption.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces The training and test MSE for increasing model complexity, using Ordinary Least Squares and $k$-fold Cross Validation and the true dataset. While the test error reaches a minimum before increasing again, the training error will continuously decrease with increasing complexity.\relax }}{10}{figure.caption.4}\protected@file@percent }
+\newlabel{fig:2b}{{3}{10}{The training and test MSE for increasing model complexity, using Ordinary Least Squares and $k$-fold Cross Validation and the true dataset. While the test error reaches a minimum before increasing again, the training error will continuously decrease with increasing complexity.\relax }{figure.caption.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.3}Ridge regression analysis}{10}{subsubsection.3.1.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces The MSE, calculated using the true model, for the test data for various $\lambda $ values and polynomial degrees, while using cross validation and Ridge regression. The minimum MSE value has been marked by a black $\times $.\relax }}{11}{figure.caption.5}\protected@file@percent }
+\newlabel{fig:5}{{4}{11}{The MSE, calculated using the true model, for the test data for various $\lambda $ values and polynomial degrees, while using cross validation and Ridge regression. The minimum MSE value has been marked by a black $\times $.\relax }{figure.caption.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Close-up of the MSE, calculated using the true model, for the test and training data for various $\lambda $ values, while using cross validation and Ridge regression, for a fifth order polynomial. The minimum MSE value has been marked by a black $\times $.\relax }}{11}{figure.caption.6}\protected@file@percent }
+\newlabel{fig:6}{{5}{11}{Close-up of the MSE, calculated using the true model, for the test and training data for various $\lambda $ values, while using cross validation and Ridge regression, for a fifth order polynomial. The minimum MSE value has been marked by a black $\times $.\relax }{figure.caption.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces The training and test error, calculated using the true model, for various $\lambda $ values, while using cross validation and a fifth order polynomial. The minimum MSE value has been marked by a yellow $\times $.\relax }}{12}{figure.caption.7}\protected@file@percent }
+\newlabel{fig:3}{{6}{12}{The training and test error, calculated using the true model, for various $\lambda $ values, while using cross validation and a fifth order polynomial. The minimum MSE value has been marked by a yellow $\times $.\relax }{figure.caption.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces The training and test MSE for increasing model complexity, using Ridge regression and $k$-fold Cross Validation. While the test error reaches a minimum before increasing again, the training error will continuously decrease with increasing complexity.\relax }}{12}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:4}{{7}{12}{The training and test MSE for increasing model complexity, using Ridge regression and $k$-fold Cross Validation. While the test error reaches a minimum before increasing again, the training error will continuously decrease with increasing complexity.\relax }{figure.caption.8}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.4}Lasso regression analysis}{12}{subsubsection.3.1.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces The MSE, calculated using the true model, for the test and training data for various $\lambda $ values, while using cross validation and Lasso regression, for a fifth order polynomial. The minimum MSE value has been marked by a blue $\times $.\relax }}{13}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:7}{{8}{13}{The MSE, calculated using the true model, for the test and training data for various $\lambda $ values, while using cross validation and Lasso regression, for a fifth order polynomial. The minimum MSE value has been marked by a blue $\times $.\relax }{figure.caption.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces The MSE, calculated using the true model, for the test data for various $\lambda $ values, while using cross validation and Lasso regression on a fifth order polynomial. The minimum MSE value has been marked by a yellow $\times $, although due to convergence issues, we will not use that one.\relax }}{14}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:8}{{9}{14}{The MSE, calculated using the true model, for the test data for various $\lambda $ values, while using cross validation and Lasso regression on a fifth order polynomial. The minimum MSE value has been marked by a yellow $\times $, although due to convergence issues, we will not use that one.\relax }{figure.caption.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Terrain analysis}{14}{subsection.3.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces To the left is the small cutout of the original data. To the right is the down-sampled image that we will work on.\relax }}{14}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:terrain}{{10}{14}{To the left is the small cutout of the original data. To the right is the down-sampled image that we will work on.\relax }{figure.caption.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces The testing and training error for various polynomial degrees, while using k-fold cross validation\relax }}{15}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:10}{{11}{15}{The testing and training error for various polynomial degrees, while using k-fold cross validation\relax }{figure.caption.12}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Ridge regression}{15}{subsubsection.3.2.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces The Mean Square error calculated for various values of $\lambda $ and polynomial orders. The black $\times $ marks the best fit.\relax }}{16}{figure.caption.13}\protected@file@percent }
+\newlabel{fig:11}{{12}{16}{The Mean Square error calculated for various values of $\lambda $ and polynomial orders. The black $\times $ marks the best fit.\relax }{figure.caption.13}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces The MSE, calculated for various $\lambda $ values, while using cross validation and Ridge regression on a 10th order polynomial. The minimum MSE value has been marked by a yellow $\times $\relax }}{16}{figure.caption.14}\protected@file@percent }
+\newlabel{fig:12}{{13}{16}{The MSE, calculated for various $\lambda $ values, while using cross validation and Ridge regression on a 10th order polynomial. The minimum MSE value has been marked by a yellow $\times $\relax }{figure.caption.14}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}Lasso}{17}{subsubsection.3.2.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces The MSE, calculated for various $\lambda $ values, while using cross validation and Lasso regression on a 10th order polynomial. The minimum MSE value has been marked by a yellow $\times $\relax }}{17}{figure.caption.15}\protected@file@percent }
+\newlabel{fig:13}{{14}{17}{The MSE, calculated for various $\lambda $ values, while using cross validation and Lasso regression on a 10th order polynomial. The minimum MSE value has been marked by a yellow $\times $\relax }{figure.caption.15}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Discussion}{17}{section.4}\protected@file@percent }
+\newlabel{sec:discussion}{{4}{17}{Discussion}{section.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces The $R^2$ and $MSE$ scores for the OLS, Ridge, and Lasso regression for the best fitted polynomials, $d$ and $\lambda $.\relax }}{18}{table.caption.17}\protected@file@percent }
+\newlabel{tab:1}{{1}{18}{The $R^2$ and $MSE$ scores for the OLS, Ridge, and Lasso regression for the best fitted polynomials, $d$ and $\lambda $.\relax }{table.caption.17}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces The $R^2$ and $MSE$ scores for the OLS, Ridge, and Lasso regression for the best fitted polynomials, $d$ and $\lambda $.\relax }}{18}{table.caption.19}\protected@file@percent }
+\newlabel{tab:2}{{2}{18}{The $R^2$ and $MSE$ scores for the OLS, Ridge, and Lasso regression for the best fitted polynomials, $d$ and $\lambda $.\relax }{table.caption.19}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusion}{18}{section.5}\protected@file@percent }
+\newlabel{sec:conclussion}{{5}{18}{Conclusion}{section.5}{}}
 \bibdata{library}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}e) Lasso regression}{9}{subsection.3.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4}Discussion}{9}{section.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusion}{9}{section.5}\protected@file@percent }
+\bibcite{Franke}{{1}{1979}{{Franke}}{{}}}

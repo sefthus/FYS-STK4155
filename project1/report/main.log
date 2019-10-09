@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.5.2)  7 OCT 2019 22:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.5.2)  9 OCT 2019 14:54
 entering extended mode
 **./main.tex
 (main.tex
@@ -354,9 +354,21 @@ Package: booktabs 2005/04/14 v1.61803 publication quality tables
 \@lastruleclass=\count126
 \@thisrulewidth=\dimen165
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/jknappen\mathrsfs.sty"
+("C:\Program Files\MiKTeX 2.9\tex/latex/tools\bm.sty"
+Package: bm 2017/01/16 v1.2c Bold Symbol Support (DPC/FMi)
+\symboldoperators=\mathgroup6
+\symboldletters=\mathgroup7
+\symboldsymbols=\mathgroup8
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 141.
+LaTeX Info: Redefining \bm on input line 207.
+)
+(C:\Users\elini\AppData\Roaming\MiKTeX\2.9\tex/latex/threeparttable\threepartta
+ble.sty
+Package: threeparttable 2003/06/13  v 3.0
+\@tempboxb=\box35
+) ("C:\Program Files\MiKTeX 2.9\tex/latex/jknappen\mathrsfs.sty"
 Package: mathrsfs 1996/01/01 Math RSFS package v1.0 (jk)
-\symrsfs=\mathgroup6
+\symrsfs=\mathgroup9
 )
 (C:\Users\elini\AppData\Roaming\MiKTeX\2.9\tex/latex/xcolor\xcolor.sty
 Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
@@ -607,11 +619,11 @@ Package: expl3 2019-04-21 L3 programming layer (code)
 \l__regex_submatch_int=\count284
 \l__regex_zeroth_submatch_int=\count285
 \g__regex_trace_regex_int=\count286
-\c_empty_box=\box35
-\l_tmpa_box=\box36
-\l_tmpb_box=\box37
-\g_tmpa_box=\box38
-\g_tmpb_box=\box39
+\c_empty_box=\box36
+\l_tmpa_box=\box37
+\l_tmpb_box=\box38
+\g_tmpa_box=\box39
+\g_tmpb_box=\box40
 \l__box_top_dim=\dimen177
 \l__box_bottom_dim=\dimen178
 \l__box_left_dim=\dimen179
@@ -620,8 +632,8 @@ Package: expl3 2019-04-21 L3 programming layer (code)
 \l__box_bottom_new_dim=\dimen182
 \l__box_left_new_dim=\dimen183
 \l__box_right_new_dim=\dimen184
-\l__box_internal_box=\box40
-\l__coffin_internal_box=\box41
+\l__box_internal_box=\box41
+\l__coffin_internal_box=\box42
 \l__coffin_internal_dim=\dimen185
 \l__coffin_offset_x_dim=\dimen186
 \l__coffin_offset_y_dim=\dimen187
@@ -629,13 +641,13 @@ Package: expl3 2019-04-21 L3 programming layer (code)
 \l__coffin_y_dim=\dimen189
 \l__coffin_x_prime_dim=\dimen190
 \l__coffin_y_prime_dim=\dimen191
-\c_empty_coffin=\box42
-\l__coffin_aligned_coffin=\box43
-\l__coffin_aligned_internal_coffin=\box44
-\l_tmpa_coffin=\box45
-\l_tmpb_coffin=\box46
-\g_tmpa_coffin=\box47
-\g_tmpb_coffin=\box48
+\c_empty_coffin=\box43
+\l__coffin_aligned_coffin=\box44
+\l__coffin_aligned_internal_coffin=\box45
+\l_tmpa_coffin=\box46
+\l_tmpb_coffin=\box47
+\g_tmpa_coffin=\box48
+\g_tmpb_coffin=\box49
 \l__coffin_bounding_shift_dim=\dimen192
 \l__coffin_left_corner_dim=\dimen193
 \l__coffin_right_corner_dim=\dimen194
@@ -643,10 +655,10 @@ Package: expl3 2019-04-21 L3 programming layer (code)
 \l__coffin_top_corner_dim=\dimen196
 \l__coffin_scaled_total_height_dim=\dimen197
 \l__coffin_scaled_width_dim=\dimen198
-\c__coffin_empty_coffin=\box49
-\l__coffin_display_coffin=\box50
-\l__coffin_display_coord_coffin=\box51
-\l__coffin_display_pole_coffin=\box52
+\c__coffin_empty_coffin=\box50
+\l__coffin_display_coffin=\box51
+\l__coffin_display_coord_coffin=\box52
+\l__coffin_display_pole_coffin=\box53
 \l__coffin_display_offset_dim=\dimen199
 \l__coffin_display_x_dim=\dimen256
 \l__coffin_display_y_dim=\dimen257
@@ -823,7 +835,7 @@ Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
 )
 (C:\Users\elini\AppData\Roaming\MiKTeX\2.9\tex/latex/listings\listings.sty
 \lst@mode=\count295
-\lst@gtempboxa=\box53
+\lst@gtempboxa=\box54
 \lst@token=\toks34
 \lst@length=\count296
 \lst@currlwidth=\dimen258
@@ -839,7 +851,7 @@ Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
 File: lstmisc.sty 2019/02/27 1.8b (Carsten Heinz)
 \c@lstnumber=\count301
 \lst@skipnumbers=\count302
-\lst@framebox=\box54
+\lst@framebox=\box55
 )
 (C:\Users\elini\AppData\Roaming\MiKTeX\2.9\tex/latex/listings\listings.cfg
 File: listings.cfg 2019/02/27 1.8b listings configuration
@@ -858,32 +870,32 @@ Package csquotes Info: Redefining alias 'default' -> 'english'.
 (main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 88.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 88.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 93.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 93.
  ("C:\Program Files\MiKTeX 2.9\tex/latex/base\ts1cmr.fd"
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    ... okay on input line 93.
 
 (C:\Users\elini\AppData\Roaming\MiKTeX\2.9\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count304
 \scratchdimen=\dimen262
-\scratchbox=\box55
+\scratchbox=\box56
 \nofMPsegments=\count305
 \nofMParguments=\count306
 \everyMPshowfont=\toks35
@@ -942,9 +954,10 @@ G,.JBIG2,.JB2,.eps]
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
+Package caption Info: threeparttable package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\AtBeginShipoutBox=\box56
-Package hyperref Info: Link coloring ON on input line 88.
+\AtBeginShipoutBox=\box57
+Package hyperref Info: Link coloring ON on input line 93.
 ("C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\nameref.sty"
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 
@@ -954,25 +967,25 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 \c@section@level=\count310
 LaTeX Info: Redefining \Ref on input line 515.
 )
-LaTeX Info: Redefining \ref on input line 88.
-LaTeX Info: Redefining \pageref on input line 88.
-LaTeX Info: Redefining \nameref on input line 88.
+LaTeX Info: Redefining \ref on input line 93.
+LaTeX Info: Redefining \pageref on input line 93.
+LaTeX Info: Redefining \nameref on input line 93.
 
 (main.out) (main.out)
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
-LaTeX Info: Redefining \Ref on input line 88.
+LaTeX Info: Redefining \Ref on input line 93.
 \c@lstlisting=\count311
-LaTeX Font Info:    Try loading font information for U+msa on input line 91.
+LaTeX Font Info:    Try loading font information for U+msa on input line 96.
  ("C:\Program Files\MiKTeX 2.9\tex/latex/amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 91.
+LaTeX Font Info:    Try loading font information for U+msb on input line 96.
  ("C:\Program Files\MiKTeX 2.9\tex/latex/amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+rsfs on input line 91.
+LaTeX Font Info:    Try loading font information for U+rsfs on input line 96.
 
 ("C:\Program Files\MiKTeX 2.9\tex/latex/jknappen\ursfs.fd"
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
@@ -983,92 +996,272 @@ File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 \openout4 = `main.toc'.
 
  [2]
-Underfull \hbox (badness 10000) in paragraph at lines 115--116
+Underfull \hbox (badness 10000) in paragraph at lines 105--106
 
  []
 
-<a_CI_betaOLS.pdf, id=84, 462.52798pt x 346.89601pt>
-File: a_CI_betaOLS.pdf Graphic file (type pdf)
-<use a_CI_betaOLS.pdf>
-Package pdftex.def Info: a_CI_betaOLS.pdf  used on input line 123.
-(pdftex.def)             Requested size: 323.76736pt x 242.82555pt.
-[3 <./a_CI_betaOLS.pdf>]
-<c_OLSerr_train_test_vs_pdegree.pdf, id=136, 462.52798pt x 346.89601pt>
-File: c_OLSerr_train_test_vs_pdegree.pdf Graphic file (type pdf)
-<use c_OLSerr_train_test_vs_pdegree.pdf>
-Package pdftex.def Info: c_OLSerr_train_test_vs_pdegree.pdf  used on input line
- 159.
-(pdftex.def)             Requested size: 323.76736pt x 242.82555pt.
- [4]
-<d_lambda_vs_err_d5.pdf, id=144, 462.52798pt x 346.89601pt>
-File: d_lambda_vs_err_d5.pdf Graphic file (type pdf)
-<use d_lambda_vs_err_d5.pdf>
-Package pdftex.def Info: d_lambda_vs_err_d5.pdf  used on input line 175.
+[3]
+
+Package hyperref Warning: Difference (2) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 183.
+
+[4] [5]
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 307.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 307.
+
+[6] [7]
+Underfull \hbox (badness 10000) in paragraph at lines 353--355
+
+ []
+
+<C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/a_CI_
+betaOLS_st_wb0.pdf, id=183, 462.52798pt x 346.89601pt>
+File: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
+a_CI_betaOLS_st_wb0.pdf Graphic file (type pdf)
+<use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/a
+_CI_betaOLS_st_wb0.pdf>
+Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
+ct1/report/figures/a_CI_betaOLS_st_wb0.pdf  used on input line 360.
 (pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
- [5 <./c_OLSerr_train_test_vs_pdegree.pdf>]
-<d_Ridge_err_pdegree_noise.pdf, id=185, 462.52798pt x 346.89601pt>
-File: d_Ridge_err_pdegree_noise.pdf Graphic file (type pdf)
-<use d_Ridge_err_pdegree_noise.pdf>
-Package pdftex.def Info: d_Ridge_err_pdegree_noise.pdf  used on input line 186.
+[8 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/a_
+CI_betaOLS_st_wb0.pdf>]
+<C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/c_OLS
+err_train_test_vs_pdegree.pdf, id=229, 462.52798pt x 346.89601pt>
+File: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
+c_OLSerr_train_test_vs_pdegree.pdf Graphic file (type pdf)
+<use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/c
+_OLSerr_train_test_vs_pdegree.pdf>
+Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
+ct1/report/figures/c_OLSerr_train_test_vs_pdegree.pdf  used on input line 385.
+(pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
 
-(pdftex.def)             Requested size: 323.76736pt x 242.82555pt.
 
-[6 <./d_lambda_vs_err_d5.pdf>]
-<d_Ridge_MSE_pdegree_lmbda.pdf, id=227, 462.52798pt x 346.89601pt>
-File: d_Ridge_MSE_pdegree_lmbda.pdf Graphic file (type pdf)
-<use d_Ridge_MSE_pdegree_lmbda.pdf>
-Package pdftex.def Info: d_Ridge_MSE_pdegree_lmbda.pdf  used on input line 195.
+LaTeX Warning: Reference `fig:2a' on page 9 undefined on input line 390.
+
+<C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/c_OLS
+err_train_test_vs_pdegree_no_noise.pdf, id=230, 462.52798pt x 346.89601pt>
+File: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
+c_OLSerr_train_test_vs_pdegree_no_noise.pdf Graphic file (type pdf)
+<use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/c
+_OLSerr_train_test_vs_pdegree_no_noise.pdf>
+Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
+ct1/report/figures/c_OLSerr_train_test_vs_pdegree_no_noise.pdf  used on input l
+ine 393.
+(pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
+[9 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/c_
+OLSerr_train_test_vs_pdegree.pdf>]
+<C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/d_Rid
+ge_MSE_pdegree_lmbda.pdf, id=275, 462.52798pt x 346.89601pt>
+File: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
+d_Ridge_MSE_pdegree_lmbda.pdf Graphic file (type pdf)
+<use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/d
+_Ridge_MSE_pdegree_lmbda.pdf>
+Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
+ct1/report/figures/d_Ridge_MSE_pdegree_lmbda.pdf  used on input line 406.
+(pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
+ [10 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
+c_OLSerr_train_test_vs_pdegree_no_noise.pdf>]
+<C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/d_Rid
+ge_MSE_pdegree_lmbda_close.pdf, id=319, 462.52798pt x 346.89601pt>
+File: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
+d_Ridge_MSE_pdegree_lmbda_close.pdf Graphic file (type pdf)
+<use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/d
+_Ridge_MSE_pdegree_lmbda_close.pdf>
+Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
+ct1/report/figures/d_Ridge_MSE_pdegree_lmbda_close.pdf  used on input line 413.
 
 (pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
- [7 <./d_Ridge_err_pdegree_noise.pdf>]
-<d_Ridge_MSE_pdegree_lmbda_close.pdf, id=270, 462.52798pt x 346.89601pt>
-File: d_Ridge_MSE_pdegree_lmbda_close.pdf Graphic file (type pdf)
-<use d_Ridge_MSE_pdegree_lmbda_close.pdf>
-Package pdftex.def Info: d_Ridge_MSE_pdegree_lmbda_close.pdf  used on input lin
-e 202.
+<C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/d_lam
+bda_vs_err_d5_close.pdf, id=320, 462.52798pt x 346.89601pt>
+File: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
+d_lambda_vs_err_d5_close.pdf Graphic file (type pdf)
+<use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/d
+_lambda_vs_err_d5_close.pdf>
+Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
+ct1/report/figures/d_lambda_vs_err_d5_close.pdf  used on input line 421.
 (pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
- [8 <./d_Ridge_MSE_pdegree_lmbda.pdf> <./d_Ridge_MSE_pdegree_lmbda_close.pdf
+[11 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/d
+_Ridge_MSE_pdegree_lmbda.pdf> <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155
+/project1/report/figures/d_Ridge_MSE_pdegree_lmbda_close.pdf
 
-pdfTeX warning: pdflatex.exe (file ./d_Ridge_MSE_pdegree_lmbda_close.pdf): PDF 
-inclusion: multiple pdfs with page group included in a single page
->] (main.bbl
+pdfTeX warning: pdflatex.exe (file C:/Users/elini/Documents/FYS-STK4155/FYS-STK
+4155/project1/report/figures/d_Ridge_MSE_pdegree_lmbda_close.pdf): PDF inclusio
+n: multiple pdfs with page group included in a single page
+>]
+<C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/d_Rid
+ge_err_pdegree.pdf, id=407, 462.52798pt x 346.89601pt>
+File: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
+d_Ridge_err_pdegree.pdf Graphic file (type pdf)
+<use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/d
+_Ridge_err_pdegree.pdf>
+Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
+ct1/report/figures/d_Ridge_err_pdegree.pdf  used on input line 438.
+(pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
+ [12 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
+d_lambda_vs_err_d5_close.pdf> <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155
+/project1/report/figures/d_Ridge_err_pdegree.pdf
 
-Package natbib Warning: Empty `thebibliography' environment on input line 8.
+pdfTeX warning: pdflatex.exe (file C:/Users/elini/Documents/FYS-STK4155/FYS-STK
+4155/project1/report/figures/d_Ridge_err_pdegree.pdf): PDF inclusion: multiple 
+pdfs with page group included in a single page
+>]
+<C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/e_Las
+so_MSE_pdegree_lmbda.pdf, id=485, 462.52798pt x 346.89601pt>
+File: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
+e_Lasso_MSE_pdegree_lmbda.pdf Graphic file (type pdf)
+<use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/e
+_Lasso_MSE_pdegree_lmbda.pdf>
+Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
+ct1/report/figures/e_Lasso_MSE_pdegree_lmbda.pdf  used on input line 455.
+(pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
+<C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/e_lam
+bda_vs_err_d5.pdf, id=486, 462.52798pt x 346.89601pt>
+File: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
+e_lambda_vs_err_d5.pdf Graphic file (type pdf)
+<use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/e
+_lambda_vs_err_d5.pdf>
+Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
+ct1/report/figures/e_lambda_vs_err_d5.pdf  used on input line 462.
+(pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
+ [13 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
+e_Lasso_MSE_pdegree_lmbda.pdf>]
+<C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/terra
+in_cut.pdf, id=535, 462.52798pt x 346.89601pt>
+File: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
+terrain_cut.pdf Graphic file (type pdf)
+<use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/t
+errain_cut.pdf>
+Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
+ct1/report/figures/terrain_cut.pdf  used on input line 472.
+(pdftex.def)             Requested size: 231.26341pt x 173.44757pt.
+<C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/terra
+in_cut_sample.pdf, id=536, 462.52798pt x 346.89601pt>
+File: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
+terrain_cut_sample.pdf Graphic file (type pdf)
+<use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/t
+errain_cut_sample.pdf>
+Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
+ct1/report/figures/terrain_cut_sample.pdf  used on input line 473.
+(pdftex.def)             Requested size: 231.26341pt x 173.44757pt.
+ [14 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
+e_lambda_vs_err_d5.pdf> <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
+ct1/report/figures/terrain_cut.pdf
 
-)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 217.
- [9]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 217.
+pdfTeX warning: pdflatex.exe (file C:/Users/elini/Documents/FYS-STK4155/FYS-STK
+4155/project1/report/figures/terrain_cut.pdf): PDF inclusion: multiple pdfs wit
+h page group included in a single page
+> <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/ter
+rain_cut_sample.pdf
+
+pdfTeX warning: pdflatex.exe (file C:/Users/elini/Documents/FYS-STK4155/FYS-STK
+4155/project1/report/figures/terrain_cut_sample.pdf): PDF inclusion: multiple p
+dfs with page group included in a single page
+>]
+Overfull \hbox (11.38077pt too wide) in paragraph at lines 481--482
+[]\OT1/cmr/m/n/10 We first per-formed an Or-di-nary Least Squares re-gres-sion 
+anal-y-sis, which in-cluded Cross-Validation.
+ []
+
+<C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/g_OLS
+_err_pdegree_c1000s40.pdf, id=609, 462.52798pt x 346.89601pt>
+File: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
+g_OLS_err_pdegree_c1000s40.pdf Graphic file (type pdf)
+<use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/g
+_OLS_err_pdegree_c1000s40.pdf>
+Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
+ct1/report/figures/g_OLS_err_pdegree_c1000s40.pdf  used on input line 488.
+(pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
+<C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/g_Rid
+ge_MSE_pdegree_lmbda.pdf, id=611, 462.52798pt x 346.89601pt>
+File: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
+g_Ridge_MSE_pdegree_lmbda.pdf Graphic file (type pdf)
+<use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/g
+_Ridge_MSE_pdegree_lmbda.pdf>
+Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
+ct1/report/figures/g_Ridge_MSE_pdegree_lmbda.pdf  used on input line 503.
+(pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
+[15 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/g
+_OLS_err_pdegree_c1000s40.pdf>]
+<C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/g_Rid
+ge_lambda_vs_err_d10.pdf, id=654, 462.52798pt x 346.89601pt>
+File: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
+g_Ridge_lambda_vs_err_d10.pdf Graphic file (type pdf)
+<use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/g
+_Ridge_lambda_vs_err_d10.pdf>
+Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
+ct1/report/figures/g_Ridge_lambda_vs_err_d10.pdf  used on input line 511.
+(pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
+File: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
+g_Ridge_lambda_vs_err_d10.pdf Graphic file (type pdf)
+<use C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/g
+_Ridge_lambda_vs_err_d10.pdf>
+Package pdftex.def Info: C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/proje
+ct1/report/figures/g_Ridge_lambda_vs_err_d10.pdf  used on input line 521.
+(pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
+ [16 <C:/Users/elini/Documents/FYS-STK4155/FYS-STK4155/project1/report/figures/
+g_Ridge_MSE_pdegree_lmbda.pdf> <C:/Users/elini/Documents/FYS-STK4155/FYS-STK415
+5/project1/report/figures/g_Ridge_lambda_vs_err_d10.pdf
+
+pdfTeX warning: pdflatex.exe (file C:/Users/elini/Documents/FYS-STK4155/FYS-STK
+4155/project1/report/figures/g_Ridge_lambda_vs_err_d10.pdf): PDF inclusion: mul
+tiple pdfs with page group included in a single page
+>] [17]
+! Extra }, or forgotten $.
+l.577 ... easier estimating a good $\bm{\tilde y}}
+                                                  $.
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+[18] (main.bbl)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 591.
+ [19]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 591.
  (main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 217.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 217.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 591.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 591.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: C8C9B4AB5432666CB0A5025F09774E85;748.
+(rerunfilecheck)             Checksum: A090FF66BE314B5A8514F7542AD2E28B;1390.
+
+
+LaTeX Warning: There were undefined references.
+
  ) 
 Here is how much of TeX's memory you used:
- 23335 strings out of 492897
- 389727 string characters out of 3133499
- 681172 words of memory out of 3000000
- 26962 multiletter control sequences out of 15000+200000
- 542900 words of font info for 68 fonts, out of 3000000 for 9000
+ 23607 strings out of 492897
+ 398478 string characters out of 3133499
+ 691628 words of memory out of 3000000
+ 27154 multiletter control sequences out of 15000+200000
+ 548900 words of font info for 88 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 53i,8n,92p,821b,424s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 53i,14n,92p,821b,485s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
-les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKT
-eX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/f
-onts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
-1/public/amsfonts/cm/cmmi9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
-amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
-cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.
-pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Pr
-ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Program File
-s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.9/font
-s/type1/public/amsfonts/cm/cmsy9.pfb>
-Output written on main.pdf (9 pages, 266154 bytes).
+les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx7.pfb><C:/Program Files/MiKTe
+X 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fo
+nts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
+amsfonts/cm/cmmi9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
+cm/cmmib10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr1
+0.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:
+/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program 
+Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Program Files/MiKT
+eX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/p
+ublic/amsfonts/cm/cmr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
+onts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
+cmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb
+><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on main.pdf (19 pages, 563163 bytes).
 PDF statistics:
- 414 PDF objects out of 1000 (max. 8388607)
- 33 named destinations out of 1000 (max. 500000)
- 135 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 839 PDF objects out of 1000 (max. 8388607)
+ 80 named destinations out of 1000 (max. 500000)
+ 231 words of extra memory for PDF output out of 10000 (max. 10000000)
 

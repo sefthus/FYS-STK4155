@@ -1,3 +1,8 @@
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib as mpl
+mpl.use('TkAgg')
+from matplotlib.ticker import LinearLocator, FormatStrFormatter
+import matplotlib.pyplot as plt
 import numpy as np
 from random import random, seed
 import sys
@@ -68,3 +73,28 @@ def check_centering(y, yc):
 def check_eq(list1, val): 
     return(all(x == val for x in list1))
 
+def plot_CI(param, param_var, print_CI = False, include_intercept=False):
+    """ plots the confidence intervals of the parameters at 95% confidence"""
+    """ parameter index vs parameter value                                """
+
+    #param_var[np.abs(param_var)<1e-14]=0
+    error = 1.96*np.sqrt(param_var)
+
+    if print_CI:
+        print('CI_.95 beta:')
+        for i in range(len(param)):
+            print('   %.2f +- %.2f' % (param[i], error[i]))
+
+    if include_intercept:
+        indices = np.arange(0, len(param_var),1)
+    else: 
+        indices = np.arange(1, len(param_var)+1,1)
+
+    plt.errorbar(indices, param, yerr=error, fmt='o', capsize=4, capthick=1.5)
+    plt.xlabel(r'$\beta$ - parameter index', size=14)
+    plt.ylabel(r'$\beta$ value', size=14)
+    plt.tick_params(axis='both', labelsize=12)
+    
+    plt.grid('True', linestyle='--')
+    plt.tight_layout()
+    plt.show()
