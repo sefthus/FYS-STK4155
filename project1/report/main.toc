@@ -3,7 +3,7 @@
 \contentsline {section}{\numberline {2}Method}{3}{section.2}% 
 \contentsline {subsubsection}{\numberline {2.0.1}Decomposing the cost function}{4}{subsubsection.2.0.1}% 
 \contentsline {subsection}{\numberline {2.1}Ordinary Least Squares regression}{5}{subsection.2.1}% 
-\contentsline {subsection}{\numberline {2.2}Ridge and Lasso regression}{6}{subsection.2.2}% 
+\contentsline {subsection}{\numberline {2.2}Ridge and Lasso regression}{5}{subsection.2.2}% 
 \contentsline {subsection}{\numberline {2.3}Implementation}{6}{subsection.2.3}% 
 \contentsline {subsubsection}{\numberline {2.3.1}$k$-fold Cross-Validation}{7}{subsubsection.2.3.1}% 
 \contentsline {subsubsection}{\numberline {2.3.2}Standardizing the data}{7}{subsubsection.2.3.2}% 

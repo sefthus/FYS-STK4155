@@ -227,22 +227,9 @@ def main_terrain(skip_x=40, skip_y=40):
     beta, beta_var = cvmet.kfold_CV(X10[:,1:], z1, z1, reg_method=LinearRegression, return_beta_var=True)
     tools.plot_CI(beta, beta_var, print_CI=False)
 
-    #sys.exit()
-    print('   ------------ fit 18th order poly')
-    #fit_data(X10[:,1:], z1, z1, stddev=stddev, include_intercept=True, center_var=True, use_sklearn=True, reg_method=LinearRegression, plot_beta=False)
-    #fit_data(X10[:,1:], z1, z1, stddev=stddev, include_intercept=True, center_var=True, use_sklearn=False, reg_method=LinearRegression, plot_beta=False)
-    #sys.exit()
     print(' ------------- Ridge')
-    #regression_lmbda(x1, y1, z1, z1, d=10, cv_method=cvmet.kfold_CV, reg_method=Ridge, plot_mse=True)
-    #fit_data(X[:,1:], z1, z1, stddev=stddev, lmbda=1e-3, include_intercept=True, center_var=True, use_sklearn=False, reg_method=Ridge, plot_beta=False)
-    #fit_data(X[:,1:], z1, z1, stddev=stddev, lmbda=1e-3, include_intercept=True, center_var=True, use_sklearn=True, reg_method=Ridge, plot_beta=False)
-    
+    #regression_lmbda(x1, y1, z1, z1, d=10, cv_method=cvmet.kfold_CV, reg_method=Ridge, plot_mse=True)    
     #ridge_bias_variance(x1, y1, z1, z1, degree_max=22, plot_mse=True)
-    #sys.exit()
-
-    print('   ------------ fit 21st order poly')
-    #bias_variance_tradeoff(x1, y1, z1, z1, degree_max=30, reg_method=Ridge)#, cv_method=cvmet.kfold_CV)   
-    #bias_variance_tradeoff(x1, y1, z1, z1, degree_max=30, reg_method=Ridge, cv_method=cvmet.kfold_CV_sklearn)   
 
     
     print(' -------------- Lasso')
@@ -250,10 +237,6 @@ def main_terrain(skip_x=40, skip_y=40):
     #lasso_bias_variance(x1, y1, z1, z1, degree_max=22, plot_mse=True)
     #bias_variance_tradeoff(x1, y1, z1, z1, degree_max=30, reg_method=Ridge)#, cv_method=cvmet.kfold_CV)   
 
-    #fit_data(X, z1, z1, stddev=stddev, include_intercept=True, center_var=True, use_sklearn=True, reg_method=Lasso)#, plot_beta=True)
- 
-
-    #find_im_size(im)
 
 
 def bias_variance_tradeoff(x, y, z_noise, z_true, degree_max = 14, lmbda=0, return_var = False, cv_method = cvmet.kfold_CV, reg_method=None, normalize=False):
