@@ -325,7 +325,7 @@ We add the mean again when calculating $\bm{{\tilde z}}$, that is
 \end{align}
 
 Standardizing the data is not that important for the OLS method, but rather for Ridge and Lasso, where we have the penalty $\lambda$. $\lambda$ puts constraints on the $\beta$-coefficients, but the coefficients size depends on the magnitude of each variable.
-It is therefore important to get the data on the same scales, so that no variable is punalized unfairly, and to be able to see which factors truly contribute the most to $\bm{\tilde z}$. Also, we no longer have an intercept, but it can be interpreted as being the $\mathrm{E}[\bm{z}^\mathrm{train,c}]$.
+It is therefore important to get the data on the same scales, so that no variable is penalized unfairly, and to be able to see which factors truly contribute the most to $\bm{\tilde z}$. Also, we no longer have an intercept, but it can be interpreted as being the $\mathrm{E}[\bm{z}^\mathrm{train,c}]$.
 
 \subsubsection{Linear regression}
 We first run the three regression analyses on the Franke Function data. Given that we know the true function already, we will train our algorithm with the noisy data, but calculate the MSE using the true function. 
@@ -373,7 +373,7 @@ which should be the irreducible error variance, that is, $\sigma^2$, which in ou
 
 
 \subsubsection{ Bias-Variance trade-off}
-We try to create a figure similar to Figure 2.11 of Hastie, Tibshirani, and Friedman, which shows the test and training error as a function of the complexity of the model. In our case, the complexity is the polynomial degree.
+We try to create a figure similar to Figure 2.11 of \citet{Hastie2009}, which shows the test and training error as a function of the complexity of the model. In our case, the complexity is the polynomial degree.
 
 To reproduce this figure, we will pretend we do not know the true model, and use the noisy data alone. We then get the diagram in Figure \ref{fig:2}. Lowest MSE is still found at the 5th polynomial order, like before. Here we see that the test error reaches a minimum, but the training error continuously decreases.
  
@@ -510,20 +510,15 @@ Like before, we plot the MSE against $\lambda$ for the polynomial we found that 
 	\label{fig:12}
 \end{figure}
 
-\subsubsection{Lasso}
+\subsubsection{Lasso regression}
 We have a hard time performing the Lasso regression analysis. The computations take a very long time, and the small $\lambda$ that seems to be favored, throw out a no-convergence warning.
-We therefore assume that a 10th order polynomial is still the best option, and calculate the MSE for various $\lambda$, as seen in Figure \ref{fig:13}. Here too, the curve is erratic, and there is no well-defined minimum.
+We therefore assume that a 10th order polynomial is still the best option, and calculate the MSE for various $\lambda$, as seen in Figure \ref{fig:13}. Here too,  does the curve increase with the polynomial order $d$, and there is no clear minimum, although there is a local one at $\lambda=10^{-1}$.
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.6]{g_Ridge_lambda_vs_err_d10.pdf}
+	\includegraphics[scale=0.6]{g_Lasso_lambda_vs_err_d10.pdf}
 	\caption{The MSE, calculated for various $\lambda$ values, while using cross validation and Lasso regression on a 10th order polynomial. The minimum MSE value has been marked by a yellow $\times$}
 	\label{fig:13}
 \end{figure}
-min error: 8333.226101945776
-min error poly: 29
-max r2 score: 0.6207354507501407
-
-Need a higher polynomial
 
 \section{Discussion}\label{sec:discussion}
 For our data generated from the Franke function, we find that, irregardless of method, a 5th order polynomial fits our data the best. The $\beta$-coefficients, do however, have very large confidence intervals.
@@ -551,7 +546,7 @@ In Table\ref{tab:1} The $R^2$ and $\mathrm{MSE}$ scores are shown for the best f
 Initially, we had fewer points, but this proved to make our analyses difficult, as the noise was of the same order as the Franke Function, making it hard to sample the true function. Our MSE was then approximately 0.02, and $R^2$ lied around $\pm0.1$. 
 We found that this could be remedied by lowering the noise, by, for instance lowering its standard deviation, or by increasing the amount of data points. We chose the latter. We suspect there may be something wrong in the way the confidence intervals of the $\beta$ parameters are calculated, as they are very large at certain data points, but we are not able to find it.
 
-Performing an analysis on the terrain data proved difficult. The minimum MSE and corresponding $R^2$-scores can be seen in Table \ref{tab:2}. It would seem that the Lasso managed to recreate the terrain the best, but this does not say much, as they all have an $R^2\approx0.6$, and the $\lambda$-values being as uncertain as they are.
+Performing an analysis on the terrain data proved difficult. The minimum MSE and corresponding $R^2$-scores can be seen in Table \ref{tab:2}. It would seem that the Ridge regression managed to recreate the terrain the best, but this does not say much, as they all have an $R^2\approx0.6$, and the $\lambda$-values being as uncertain as they are.
 
 \begin{table*}[t]
 	\centering
@@ -565,14 +560,14 @@ Performing an analysis on the terrain data proved difficult. The minimum MSE and
 			\midrule
 			OLS			& 10 	& - 	&$8413.40$ & 0.609\\
 			Ridge		& 10 	& $10^{-7}$ &$8271.37$ &0.618 \\
-			Lasso		& 10 	& - & $7998.89$ &$0.628$ \\
+			Lasso		& 10 	& $10^{-6}$ & $9034.87$ &$0.587$ \\
 			\bottomrule\bottomrule
 		\end{tabular}
 	\end{threeparttable}
 \end{table*}
 
-As for the reason for this, we are not certain. I suspect that if, instead of just skipping over pixels, we calculated the median, or average of neighboring pixels, applyed a Gaussian blur, then the data to fit would have been smoother, and our regression methods might have had it easier estimating a good $\bm{\tilde y}}$. 
-We initially tried to do this, but time ran short near the end. The challenge then is not undersampling the original terrain image to much so that it was still recognizable, but not oversampling it either, so that wedo not get a high variance, very higher order polynomial.
+As for the reason for this, we are not certain. I suspect that if, instead of just skipping over pixels, we calculated the median, or average of neighboring pixels, applied a Gaussian blur, then the data to fit would have been smoother, and our regression methods might have had it easier estimating a good $\bm{\tilde y}$. 
+We initially tried to do this, but time ran short near the end. The challenge then is not undersampling the original terrain image to much so that it was still recognizable, but not oversampling it either, so that we do not get a high variance, very higher order polynomial.
 
 Personal note at the end. I found this project somewhat confusing at times. It seemed that different instructors would endorse, or emphasize certain things quite differently. The foremost example being whether or not to penalize the intercept, where there were quite conflicting replies on piazza. Beyond that, I am aware that this report could have been more filled in in places, but I have done the best with the time I had.
  

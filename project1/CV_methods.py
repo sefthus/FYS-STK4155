@@ -14,6 +14,10 @@ from sklearn.utils import shuffle
 import tools
 
 def kfold_CV(X, z, z_true, stddev=1, splits = 5, return_var = False, lmbda=0, normalize=None, return_beta_var=False, return_bv=False, franke_plot=False, reg_method=None):
+    """ 
+      k-fold cross validation                                   
+      design matrix must be without the first column [1,1,...1] 
+    """
 
     kfold = KFold(n_splits=splits, shuffle=True)#, random_state=0)
 
@@ -25,7 +29,7 @@ def kfold_CV(X, z, z_true, stddev=1, splits = 5, return_var = False, lmbda=0, no
     variance_splits = np.zeros(splits)
     betas = np.zeros((splits, X.shape[1]))
     var_beta = np.zeros((splits,X.shape[1] ))
-    #z_tilde_test = np.zeros((splits, int(X.shape[0]/splits)))
+
     i=0
     for train_idx, test_idx in kfold.split(X):
 
@@ -96,8 +100,10 @@ def kfold_CV(X, z, z_true, stddev=1, splits = 5, return_var = False, lmbda=0, no
     print(' CV R2 score        :', r2_test)
 
 def kfold_CV_sklearn(X, z, z_true, splits = 5, normalize=False, return_var = False, lmbda=0, return_bv = False, return_beta_var=False, reg_method=Ridge):
-    """ k-fold cross validation using the sklearn library """
-    """ design matrix must be without the first column [1,1,...1] """
+    """ 
+        k-fold cross validation using the sklearn library
+        matrix X must be without the first intercept column [1,1,...1] 
+    """
 
     kfold = KFold(n_splits=splits, shuffle=True)#, random_state=0)
 
@@ -172,39 +178,3 @@ def kfold_CV_sklearn(X, z, z_true, splits = 5, normalize=False, return_var = Fal
     #print('{} >= {}'.format(mse_test, bias + variance))
     print(' CV sklearn MSE_scores:', mse_test)
     print(' CV R2 score sklearn     :', r2_test)
-
-def train_test_sklearn(X, z, z_true, lmbda=0, reg_method=LinearRegression, normalize=False):
-
-        X_train, X_test, z_train, z_test, z_true_train, z_true_test = train_test_split(X, z, z_true,  test_size=1/5.)
-
-        scalerX = StandardScaler(with_std = True).fit(X_train)
-        X_train_c = scalerX.transform(X_train)
-
-        scalerz = StandardScaler(with_std=False).fit(z_train.reshape(-1,1))
-        z_train_c = scalerz.transform(z_train.reshape(-1,1)).ravel()
-
-        #scalerztrue = StandardScaler(with_std=False).fit(z_true_train.reshape(-1,1))
-        z_true_train_c = z_true_train#scalerztrue.transform(z_true_train.reshape(-1,1)).ravel()
-
-
-        X_test_c = scalerX.transform(X_test)
-        z_test_c = scalerz.transform(z_test.reshape(-1,1)).ravel()
-        z_true_test_c = z_true_test#scalerztrue.transform(z_true[test_idx].reshape(-1,1)).ravel()
-
-        # fit model on training set
-        if reg_method == LinearRegression:
-            model = reg_method(fit_intercept=True)
-        else:
-            model = reg_method(alpha=lmbda, normalize=normalize, fit_intercept=True, max_iter = 1e4,tol = 0.001)
-        model.fit(X_train_c, z_train_c)
-
-        # evaulate model on test set
-        z_tilde_test = model.predict(X_test_c) + scalerz.mean_
-        z_tilde_train = model.predict(X_train_c) + scalerz.mean_
-
-
-        mse_test = np.mean((z_true_test_c - z_tilde_test)**2)
-        mse_train = np.mean((z_true_train_c - z_tilde_train)**2)
-        r2_test = tools.R2_score_func(z_true_test_c, z_tilde_test)
-
-        return mse_test, mse_train, r2_test

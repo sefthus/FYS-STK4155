@@ -16,6 +16,6 @@
 \contentsline {subsubsection}{\numberline {3.1.4}Lasso regression analysis}{12}{subsubsection.3.1.4}% 
 \contentsline {subsection}{\numberline {3.2}Terrain analysis}{14}{subsection.3.2}% 
 \contentsline {subsubsection}{\numberline {3.2.1}Ridge regression}{15}{subsubsection.3.2.1}% 
-\contentsline {subsubsection}{\numberline {3.2.2}Lasso}{17}{subsubsection.3.2.2}% 
+\contentsline {subsubsection}{\numberline {3.2.2}Lasso regression}{17}{subsubsection.3.2.2}% 
 \contentsline {section}{\numberline {4}Discussion}{17}{section.4}% 
 \contentsline {section}{\numberline {5}Conclusion}{18}{section.5}% 

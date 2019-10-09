@@ -24,7 +24,9 @@ np.random.seed(3155)
 #np.random.seed(2018)
 
 def FrankeFunction(x,y):
-    """ the Franke function """
+    """ 
+    calculates the Franke function from x and y from meshgrid
+    """
 
     term1 = 0.75 * np.exp(-(0.25 * (9*x-2)**2) - 0.25 * ((9*y-2)**2))
     term2 = 0.75 * np.exp(-((9*x+1)**2) / 49.0 - 0.1 * (9*y+1))
@@ -34,7 +36,9 @@ def FrankeFunction(x,y):
     return term1 + term2 + term3 + term4
 
 def FrankePlot(x, y, z, ztilde=None):
-    """ plot 3d surface of z, and possibly also of the z prediction, ztilde"""
+    """ 
+    plot 3d surface of x,y and z, and possibly also of the z prediction, ztilde
+    """
 
     fig = plt.figure()
     ax = fig.gca(projection='3d')
@@ -87,34 +91,39 @@ def terrain_data(skip_x=4, skip_y=4, plot_terrain=False, skip=False, cut_im=True
     return terrain
 
 
-def fit_data(X, z_noise, z_true, stddev=1, lmbda=0, normalize=False, center_var=True, include_intercept=False, test_centering=False, use_sklearn=False, reg_method=LinearRegression, plot_beta=False):
+def main(d=5, degree_max=14, lmbda=1e-3, lmbda_max=1e2, lmbda_min=1e-6, stddev=1, calc_intercept=False, plot_intercept=False, FrankePlot=False, plot_beta=False, plot_mse=True, OLSreg=True, Ridgereg=False, Lassoreg=False, bv_trade=False, find_l_d=False, use_sklearn=False, CV=True):
+    """
 
-    z_tilde, z_true, beta, varbeta = regmet.best_fit(X, z_noise, z_true, stddev, lmbda, normalize, center_var, include_intercept, test_centering, use_sklearn, reg_method)
-    mse_true = tools.MSE_func(z_true, z_tilde)
-    mse_noise = tools.MSE_func(z_noise, z_tilde)
-    print(' true Mean squared error =', mse_true)
-    print(' noise Mean squared error =', mse_noise)
-    print(' R2 score           =', tools.R2_score_func(z_true, z_tilde))
-    #print(' R2 score sklearn =', r2_score(z1_true,z_tilde)) # same value
+     Main function to call on to perform linear regression
 
-    if plot_beta:
-        tools.plot_CI(beta, varbeta, include_intercept=include_intercept)
+     d (5)             : polynomial order of design matrix                               
+     degree_max (14)   : max polynomial order to be used in bias_variance_tradeoff       
+     lmbda (1e-3)      : value of penalization coefficient in Ridge and Lasso regression 
+     stddev (1)        : standard deviation to the the noise term epsilon                
+     plot_intercept (False) : wheter to include the intercept when plotting. Only set to true if it is calculated 
+     FrankePlot(False) : plot the Franke function                                
+     plot_beta(False)  : find the cross-validated beta coefficients and plot them
+     plot_mse(True)    : plot the mean square error from bias_variance_tradeoff 
+     OLSreg(True)      : use Ordinary Least Square regression 
+     Ridgereg(False)   : use Ridge regression
+     Lassoreg(False)   : use Lasso regression
+     bv_trade(False)   : calculate MSE for several d for a given lambda, using bias_variance_tradeoff
+     find_l_d(False)   : calculate MSE for several d=[0,max_degree] and several lambda=[lmbda_min,lmbda_max]
+     use_sklearn(False): use sklearns algorithm for doing a regression analysis
+     CV(True)          : perform a crossvalidation for lambda and d
 
-def main():
-
+     """
+    
+    
     # Make data.
     print(' make data')
-    #x = np.sort(np.random.random(100))
     x = np.arange(0, 1, 0.01)
-    #x = np.linspace(0, 1, 50, endpoint=True)
-    #sys.exit()
-    #y = np.sort(np.random.random(100))
     y = np.arange(0, 1, 0.01)
-    #y = np.linspace(0, 1, 50, endpoint=True)
+
     x, y = np.meshgrid(x, y)
-
     z = FrankeFunction(x, y)
-
+    if FrankePlot:
+        FrankePlot(x,y,z)
 
     print(' turn data matrices to arrays')
     x1 = np.ravel(x)
@@ -122,86 +131,81 @@ def main():
     n = int(len(x1))
 
     z1_true = np.ravel(z)
-    stddev = 1
+    stddev = stddev
     z1_noise = np.ravel(z) + np.random.normal(0, stddev, size=z1_true.shape) # adding noise
-    #z1_noise = z.ravel() + np.random.randn(n)
 
     print(' make design matrix')
-    X = tools.create_design_matrix(x, y, d=5)
+    X = tools.create_design_matrix(x, y, d=d)
+    if not calc_intercept:
+        X = X[:, 1:]
+    
     print('X_shape:', X.shape)
-
-    # ----------- OLS-------------------
-    print('--------------- OLS ----------------------')
-    print('  -------------- no centering')
-    #fit_data(X, z1_noise, z1_true, stddev, center_var=False, include_intercept=True, use_sklearn=False, reg_method=LinearRegression)
-
-    print('   --------------- centering manually')
-    #fit_data(X, z1_noise, z1_true, stddev, center_var=True, include_intercept=True, use_sklearn=False, reg_method=LinearRegression, plot_beta=True)
-    
-    print('   --------------- centering sklearn')
-    #fit_data(X[:,1:], z1_noise, z1_true, stddev, center_var=True, include_intercept=True, use_sklearn=True, reg_method=LinearRegression)
-    #sys.exit()
-    print('   ------------- cross validating')
-    z_tilde = cvmet.kfold_CV(X[:,1:], z1_noise, z1_true, franke_plot=True, reg_method=LinearRegression) # same result when using same random_state=0 in Kfold and shuffle
-    print(len(z_tilde), len(z), len(x), len(y))
-    #sys.exit()
-    #beta, varbeta = cvmet.kfold_CV(X[:,1:], z1_noise, z1_true, reg_method=LinearRegression, return_beta_var=True) # same result when using same random_state=0 in Kfold and shuffle
-    #tools.plot_CI(beta,varbeta, include_intercept=False)
-    #plt.show()
-    #FrankePlot(x,y,z,z_tilde)
-    print('   ---------- finding best fit polynomial')
-    #bias_variance_tradeoff(x1, y1, z1_noise, z1_true, cv_method=cvmet.kfold_CV, reg_method=LinearRegression)
-    #sys.exit()
-    #bias_variance_tradeoff(x1, y1, z1_noise, z1_true, cv_method=cvmet.kfold_CV_sklearn, reg_method=LinearRegression)
-    
-    # ------------- Ridge 
-    print('--------- Ridge regression --------------')
-    #regression_lmbda(x1, y1, z1_noise, z1_true, d=5, cv_method=cvmet.kfold_CV, reg_method=Ridge, plot_mse=True)
-    print('    ------- no cross validation')
-    #fit_data(X[:,1:], z1_noise, z1_true, stddev=stddev, lmbda=1e-3, center_var=True, include_intercept=True, use_sklearn=False, reg_method=Ridge, plot_beta=True, normalize=False)
-    #fit_data(X[:,1:], z1_noise, z1_true, stddev=stddev, lmbda=1e-3, center_var=True, include_intercept=True, use_sklearn=True, reg_method=Ridge, plot_beta=True, normalize=False)
-    #cvmet.kfold_CV(X[:,1:],z1_noise, z1_true, lmbda=1e-2, reg_method=Ridge) # same result when using same random_state=0 in Kfold and shuffle
+    if use_sklearn:
+        cv_method = cvmet.kfold_CV_sklearn
+    else: cv_method = cvmet.kfold_CV
 
     
-    print('    ---------- cross-validating')
-    #beta, varbeta = cvmet.kfold_CV(X[:,1:], z1_noise, z1_true, lmbda=1e-2, return_beta_var=True)
-    #tools.plot_CI(beta,varbeta, include_intercept=False)
-    #bias_variance_tradeoff(x1, y1, z1_noise, z1_true, 14,lmbda=1e-2, cv_method=cvmet.kfold_CV, reg_method=Ridge)
-    #bias_variance_tradeoff(x1, y1, z1_noise, z1_true, 14,lmbda=1e-3,cv_method=kfold_CV_sklearn, reg_method=Ridge)
-    #sys.exit()
-    print( '    ----- best fit based on lambda and polynomial degree')
-    #ridge_bias_variance(x1, y1, z1_noise, z1_true, plot_mse=True)
-    #regression_lmbda(x1, y1, z1_noise, z1_true, d=5, reg_method=Ridge)
-    #sys.exit()
+    if OLSreg: # Use linear regression
+        print('   -------------OLS  cross validating')
+        cv_method(X, z1_noise, z1_true, reg_method=LinearRegression) # same result when using same random_state=0 in Kfold and shuffle
+   
+    
+        if plot_beta: # plot cross-validated beta coeffs
+            beta, varbeta = cv_method(X, z1_noise, z1_true, reg_method=LinearRegression, return_beta_var=True) # same result when using same random_state=0 in Kfold and shuffle
+            tools.plot_CI(beta,varbeta, include_intercept=False)
+        
+    
+        print('   ---------- finding best fit polynomial')
+        if bv_trade: # find MSE as a function of polynomial order d
+            bias_variance_tradeoff(x1, y1, z1_noise, z1_true, degree_max, cv_method=cv_method, reg_method=LinearRegression)
+
+    
+    # ------------- Ridge
+    if Ridgereg: 
+        print('--------- Ridge regression --------------')
+        if find_l_d: # find MSE as a function of one polynomial order d and lambda
+            regression_lmbda(x1, y1, z1_noise, z1_true, d, lmbda_min, lmbda_max, n_lmbda, cv_method=cv_method, reg_method=Ridge, plot_mse=True)
+        print('    ------- no cross validation')
+        
+        if CV: # run a cross validation
+            print('    ---------- cross-validating')
+            cvmet.kfold_CV(X, z1_noise, z1_true, lmbda=lmbda, reg_method=Ridge) # same result when using same random_state=0 in Kfold and shuffle
+
+        if plot_beta: # plot beta confidence intervals
+            beta, varbeta = cvmet.kfold_CV(X, z1_noise, z1_true, lmbda=1e-2, return_beta_var=True)
+            tools.plot_CI(beta,varbeta, include_intercept=plot_intercept)
+
+        if bv_trade: # find MSE as a function of polynomial order up to max_degree and lambda
+            bias_variance_tradeoff(x1, y1, z1_noise, z1_true, degree_max, lmbda=lmbda, cv_method=cv_method, reg_method=Ridge)
+        
+        if find_l_d:
+            print( '    ----- best fit based on lambda and polynomial degree')
+            ridge_bias_variance(x1, y1, z1_noise, z1_true, degree_max, lmbda_min, lmbda_max, n_lmbda, cv_method=cv_method, plot_mse=True)
+
     # ------------- Lasso
-    print('---------------- Lasso regression --------------')
-    regression_lmbda(x1, y1, z1_noise, z1_true, d=5, cv_method=cvmet.kfold_CV_sklearn, reg_method=Lasso, plot_mse=True, normalize=False)
-    #plt.show()
-    #fit_data(X[:,1:], z1_noise, z1_true, stddev=stddev, lmbda=1e-4, center_var=True, include_intercept=True, use_sklearn=True, reg_method=Lasso, normalize=False, plot_beta=True)    
-    cvmet.kfold_CV_sklearn(X[:,1:], z1_noise, z1_true, lmbda=1e-4, reg_method=Lasso) # same result when using same random_state=0 in Kfold and shuffle
+    if Lassoreg:
+        print('---------------- Lasso regression --------------')
+        if find_l_d:
+            regression_lmbda(x1, y1, z1_noise, z1_true, d, lmbda_min, lmbda_max, n_lmbda, cv_method=cvmet.kfold_CV_sklearn, reg_method=Lasso, plot_mse=True, normalize=False)
+        
+        if CV:   
+            cvmet.kfold_CV_sklearn(X, z1_noise, z1_true, lmbda=lmbda, reg_method=Lasso) # same result when using same random_state=0 in Kfold and shuffle
 
-    #sys.exit()
-    #beta, varbeta = cvmet.kfold_CV_sklearn(X[:,1:], z1_noise, z1_true, lmbda=1e-4, reg_method=Lasso, return_beta_var=True)
-    #tools.plot_CI(beta,varbeta, include_intercept=False)
-    #plt.legend(['OLS', 'Ridge', 'Lasso'])
-    #plt.show()
-    #bias_variance_tradeoff(x1, y1, z1_noise, z1_true, 20,lmbda=1e-4, cv_method=cvmet.kfold_CV_sklearn, reg_method=Lasso)
-    #lasso_bias_variance(x1, y1, z1_noise, z1_true, plot_mse=True, normalize=False)
-    #regression_lmbda(x1, y1, z1_noise, z1_true, d=11, reg_method=Lasso, normalize=True)
-    #plt.show()
+        if plot_beta:
+            beta, varbeta = cvmet.kfold_CV_sklearn(X[:,1:], z1_noise, z1_true, lmbda=lmbda, reg_method=Lasso, return_beta_var=True)
+            tools.plot_CI(beta,varbeta, include_intercept=intercept)
+
+        if bv_trade:
+            bias_variance_tradeoff(x1, y1, z1_noise, z1_true, d, lmbda, cv_method=cvmet.kfold_CV_sklearn, reg_method=Lasso)
+
+        if find_l_d:
+            lasso_bias_variance(x1, y1, z1_noise, degree_max, lmbda_min, lmbda_max, n_lmbdaz1_true, plot_mse=plot_mse, normalize=False)
     
 def main_terrain(skip_x=40, skip_y=40):
 
     z_mesh = terrain_data(skip_x, skip_y, skip=True, plot_terrain=True, cut_im=True)
-    #print('z_shape', z_mesh.shape)
-    #z_mesh = ndimage.gaussian_filter(z_mesh,sigma=1)
-    #plt.imshow(z_mesh, interpolation='nearest')
-    #plt.show()
-    #sys.exit()
-    #very_blurred = ndimage.gaussian_filter(face, sigma=5)
-    #print(z)
-    #print(z[1])
-    #sys.exit()
+    print('z_shape', z_mesh.shape)
+
     x = np.linspace(0, z_mesh.shape[1], z_mesh.shape[1])
     y = np.linspace(0,z_mesh.shape[0], z_mesh.shape[0])  
     x_mesh, y_mesh = np.meshgrid(x,y)
@@ -217,15 +221,13 @@ def main_terrain(skip_x=40, skip_y=40):
     X = tools.create_design_matrix(x1, y1, d=5)
     print('X shape:', X.shape)
     print(' ------------ OLS')
-    #fit_data(X, z1, z1, stddev, include_intercept=True, center_var=True, use_sklearn=True, reg_method=LinearRegression, plot_beta=False)
-    #fit_data(X, z1, z1, stddev=stddev, include_intercept=True, center_var=True, use_sklearn=False, reg_method=LinearRegression)#, plot_beta=True)
     
     print(' -------finding best fit polynomial')
-    bias_variance_tradeoff(x1, y1, z1, z1, degree_max=20, reg_method=LinearRegression, cv_method=cvmet.kfold_CV)   
+    #bias_variance_tradeoff(x1, y1, z1, z1, degree_max=20, reg_method=LinearRegression, cv_method=cvmet.kfold_CV)   
     #sys.exit()
     X10 = tools.create_design_matrix(x1, y1, d=16)
-    beta, beta_var = cvmet.kfold_CV(X10[:,1:], z1, z1, reg_method=LinearRegression, return_beta_var=True)
-    tools.plot_CI(beta, beta_var, print_CI=False)
+    #beta, beta_var = cvmet.kfold_CV(X10[:,1:], z1, z1, reg_method=LinearRegression, return_beta_var=True)
+    #tools.plot_CI(beta, beta_var, print_CI=False)
 
     print(' ------------- Ridge')
     #regression_lmbda(x1, y1, z1, z1, d=10, cv_method=cvmet.kfold_CV, reg_method=Ridge, plot_mse=True)    
@@ -233,9 +235,9 @@ def main_terrain(skip_x=40, skip_y=40):
 
     
     print(' -------------- Lasso')
-    regression_lmbda(x1, y1, z1, z1, d=10, cv_method=cvmet.kfold_CV, reg_method=Ridge, plot_mse=True)
+    regression_lmbda(x1, y1, z1, z1, d=10, cv_method=cvmet.kfold_CV, reg_method=Lasso, plot_mse=True)
     #lasso_bias_variance(x1, y1, z1, z1, degree_max=22, plot_mse=True)
-    #bias_variance_tradeoff(x1, y1, z1, z1, degree_max=30, reg_method=Ridge)#, cv_method=cvmet.kfold_CV)   
+    #bias_variance_tradeoff(x1, y1, z1, z1, lmbda=1e-7 , degree_max=30, reg_method=Ridge)#, cv_method=cvmet.kfold_CV)   
 
 
 
@@ -293,9 +295,9 @@ def bias_variance_tradeoff(x, y, z_noise, z_true, degree_max = 14, lmbda=0, retu
     #fig.savefig("d_MSE_vs_poly_noise.pdf", bbox_inches='tight')
     plt.show()
 
-def regression_lmbda(x, y, z_noise, z_true, d=2, cv_method=cvmet.kfold_CV_sklearn, reg_method=Ridge, plot_mse=True, normalize=False):
+def regression_lmbda(x, y, z_noise, z_true, d=5, lmbda_min=-6,lmbda_max=2, n_lmbda=9, cv_method=cvmet.kfold_CV_sklearn, reg_method=Ridge, plot_mse=True, normalize=False):
     
-    lmbda = np.logspace(-20,2,41)
+    lmbda = np.logspace(lmbda_min, lmbda_max, n_lmbda)
     #lmbda = 10**np.arange(-8,1,0.5)
 
     error_test = np.zeros(len(lmbda))
@@ -345,9 +347,9 @@ def regression_lmbda(x, y, z_noise, z_true, d=2, cv_method=cvmet.kfold_CV_sklear
         plt.tight_layout()
         plt.show()
 
-def ridge_bias_variance(x, y, z_noise, z_true, degree_max=14, cv_method=cvmet.kfold_CV, plot_mse=False, normalize=False):
+def ridge_bias_variance(x, y, z_noise, z_true, degree_max=14, lmbda_min=-6, lmbda_max=2, n_lmbda = 20, cv_method=cvmet.kfold_CV, plot_mse=False, normalize=False):
 
-    lmbda = np.logspace(-9,0,10) 
+    lmbda = np.logspace(lmbda_min,lmbda_max,n_lmbda) 
     polydegree = np.arange(1,degree_max,1)
 
     min_error = np.zeros_like(lmbda)
@@ -385,9 +387,9 @@ def ridge_bias_variance(x, y, z_noise, z_true, degree_max=14, cv_method=cvmet.kf
         plt.tight_layout()
         plt.show()
 
-def lasso_bias_variance(x, y, z_noise, z_true, degree_max=14, plot_mse=False, normalize=False):
+def lasso_bias_variance(x, y, z_noise, z_true, degree_max=14, lmbda_min=-6, lmbda_max=2, n_lmbda=20, plot_mse=False, normalize=False):
 
-    lmbda = np.logspace(-6,2,9)
+    lmbda = np.logspace(lmbda_min,lmbda_max,n_lmbda)
     #lmbda[-1] = 0
     N_trials = 1
  

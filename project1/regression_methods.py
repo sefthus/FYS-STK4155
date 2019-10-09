@@ -126,13 +126,13 @@ def best_fit(X, z_noise, z_true, stddev=1, lmbda=0, normalize=False, center_var 
             beta = XtXinv.dot(X.T).dot(z_noise)
             z_tilde = np.matmul(X, beta)
         
+        # Calculate the right beta variance
         if reg_method==LinearRegression:
             varbeta = stddev**2*np.diag(XtXinv)
         if reg_method==Ridge:
-            print('ridge var')
             varbeta = stddev**2*np.diag( XtXinv.dot(X.T.dot(X)).dot(XtXinv.T) )
         if reg_method==Lasso:
-            print('Lasso var!')
+            # use cross-validation to estimate Var(beta)
             beta, varbeta = cvmet.kfold_CV_sklearn(X[:,1:], z_noise, z_true, return_beta_var=True, lmbda=lmbda, normalize=False, return_bv=False, reg_method=Lasso)
             
     return z_tilde, z_true, beta, varbeta
