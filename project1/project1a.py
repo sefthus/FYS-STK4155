@@ -91,7 +91,7 @@ def terrain_data(skip_x=4, skip_y=4, plot_terrain=False, skip=False, cut_im=True
     return terrain
 
 
-def main(d=5, degree_max=14, lmbda=1e-3, lmbda_max=1e2, lmbda_min=1e-6, stddev=1, calc_intercept=False, plot_intercept=False, FrankePlot=False, plot_beta=False, plot_mse=True, OLSreg=True, Ridgereg=False, Lassoreg=False, bv_trade=False, find_l_d=False, use_sklearn=False, CV=True):
+def main(d=5, degree_max=14, lmbda=1e-3, lmbda_max=1e2, lmbda_min=1e-6, stddev=1, calc_intercept=False, plot_intercept=False, FrankePlot=False, plot_beta=False, plot_mse=True, OLSreg=False, Ridgereg=False, Lassoreg=False, bv_trade=False, find_l_d=False, find_l=False, use_sklearn=False, CV=True):
     """
 
      Main function to call on to perform linear regression
@@ -161,9 +161,11 @@ def main(d=5, degree_max=14, lmbda=1e-3, lmbda_max=1e2, lmbda_min=1e-6, stddev=1
 
     
     # ------------- Ridge
-    if Ridgereg: 
+    if Ridgereg:
+        if calc_intercept:
+            X=X[:,1:]
         print('--------- Ridge regression --------------')
-        if find_l_d: # find MSE as a function of one polynomial order d and lambda
+        if find_l: # find MSE as a function of one polynomial order d and lambda
             regression_lmbda(x1, y1, z1_noise, z1_true, d, lmbda_min, lmbda_max, n_lmbda, cv_method=cv_method, reg_method=Ridge, plot_mse=True)
         print('    ------- no cross validation')
         
@@ -173,7 +175,7 @@ def main(d=5, degree_max=14, lmbda=1e-3, lmbda_max=1e2, lmbda_min=1e-6, stddev=1
 
         if plot_beta: # plot beta confidence intervals
             beta, varbeta = cvmet.kfold_CV(X, z1_noise, z1_true, lmbda=1e-2, return_beta_var=True)
-            tools.plot_CI(beta,varbeta, include_intercept=plot_intercept)
+            tools.plot_CI(beta,varbeta)
 
         if bv_trade: # find MSE as a function of polynomial order up to max_degree and lambda
             bias_variance_tradeoff(x1, y1, z1_noise, z1_true, degree_max, lmbda=lmbda, cv_method=cv_method, reg_method=Ridge)
@@ -184,8 +186,10 @@ def main(d=5, degree_max=14, lmbda=1e-3, lmbda_max=1e2, lmbda_min=1e-6, stddev=1
 
     # ------------- Lasso
     if Lassoreg:
+        if calc_intercept:
+            X=X[:,1:]
         print('---------------- Lasso regression --------------')
-        if find_l_d:
+        if find_l:
             regression_lmbda(x1, y1, z1_noise, z1_true, d, lmbda_min, lmbda_max, n_lmbda, cv_method=cvmet.kfold_CV_sklearn, reg_method=Lasso, plot_mse=True, normalize=False)
         
         if CV:   
@@ -193,7 +197,7 @@ def main(d=5, degree_max=14, lmbda=1e-3, lmbda_max=1e2, lmbda_min=1e-6, stddev=1
 
         if plot_beta:
             beta, varbeta = cvmet.kfold_CV_sklearn(X[:,1:], z1_noise, z1_true, lmbda=lmbda, reg_method=Lasso, return_beta_var=True)
-            tools.plot_CI(beta,varbeta, include_intercept=intercept)
+            tools.plot_CI(beta,varbeta)
 
         if bv_trade:
             bias_variance_tradeoff(x1, y1, z1_noise, z1_true, d, lmbda, cv_method=cvmet.kfold_CV_sklearn, reg_method=Lasso)
@@ -201,9 +205,9 @@ def main(d=5, degree_max=14, lmbda=1e-3, lmbda_max=1e2, lmbda_min=1e-6, stddev=1
         if find_l_d:
             lasso_bias_variance(x1, y1, z1_noise, degree_max, lmbda_min, lmbda_max, n_lmbdaz1_true, plot_mse=plot_mse, normalize=False)
     
-def main_terrain(skip_x=40, skip_y=40):
+def main_terrain(skip_x=40, skip_y=40, d=10, degree_max=20, lmbda=1e-3, lmbda_min=-7, lmbda_max=2, n_lmbda=10, use_sklearn=False, plot_terrain=False, bv_trade=False, find_l=False, find_l_d=False, plot_beta=False, plot_mse=True, OLSreg=False, Ridgereg=False, Lassoreg=False):
 
-    z_mesh = terrain_data(skip_x, skip_y, skip=True, plot_terrain=True, cut_im=True)
+    z_mesh = terrain_data(skip_x, skip_y, skip=True, plot_terrain=plot_terrain, cut_im=True)
     print('z_shape', z_mesh.shape)
 
     x = np.linspace(0, z_mesh.shape[1], z_mesh.shape[1])
@@ -214,31 +218,47 @@ def main_terrain(skip_x=40, skip_y=40):
     y1 = y_mesh.ravel()
     z1 = z_mesh.ravel()
     
-
     stddev = np.std(z1)
 
-
-    X = tools.create_design_matrix(x1, y1, d=5)
+    X = tools.create_design_matrix(x1, y1, d)
+    X = X[:,1:]
+    
     print('X shape:', X.shape)
-    print(' ------------ OLS')
+
+    if use_sklearn:
+        cv_method=cvmet.kfold_CV_sklearn
+    else:
+        cv_method=cvmet.kfold_CV
     
-    print(' -------finding best fit polynomial')
-    #bias_variance_tradeoff(x1, y1, z1, z1, degree_max=20, reg_method=LinearRegression, cv_method=cvmet.kfold_CV)   
-    #sys.exit()
-    X10 = tools.create_design_matrix(x1, y1, d=16)
-    #beta, beta_var = cvmet.kfold_CV(X10[:,1:], z1, z1, reg_method=LinearRegression, return_beta_var=True)
-    #tools.plot_CI(beta, beta_var, print_CI=False)
 
-    print(' ------------- Ridge')
-    #regression_lmbda(x1, y1, z1, z1, d=10, cv_method=cvmet.kfold_CV, reg_method=Ridge, plot_mse=True)    
-    #ridge_bias_variance(x1, y1, z1, z1, degree_max=22, plot_mse=True)
+    if OLSreg:
+        print(' ------------ OLS')
+        if bv_trade:
+            print(' -------finding best fit polynomial')
+            bias_variance_tradeoff(x1, y1, z1, z1, degree_max, lmbda=0, cv_method=cv_method, reg_method=LinearRegression)   
 
-    
-    print(' -------------- Lasso')
-    regression_lmbda(x1, y1, z1, z1, d=10, cv_method=cvmet.kfold_CV, reg_method=Lasso, plot_mse=True)
-    #lasso_bias_variance(x1, y1, z1, z1, degree_max=22, plot_mse=True)
-    #bias_variance_tradeoff(x1, y1, z1, z1, lmbda=1e-7 , degree_max=30, reg_method=Ridge)#, cv_method=cvmet.kfold_CV)   
+        if plot_beta:
+            beta, beta_var = cvmet.kfold_CV(X, z1, z1, reg_method=LinearRegression, return_beta_var=True)
+            tools.plot_CI(beta, beta_var, print_CI=False)
 
+    if Ridgereg:
+        print(' ------------- Ridge')
+        if bv_trade:
+            bias_variance_tradeoff(x1, y1, z1, z1, degree_max, lmbda, cv_method=cv_method, reg_method=Ridge)
+
+        if find_l:
+            regression_lmbda(x1, y1, z1, z1, d, lmbda_min, lmbda_max, n_lmbda, cv_method, reg_method=Ridge, plot_mse=plot_mse)
+        if find_l_d:
+            ridge_bias_variance(x1, y1, z1, z1, degree_max, lmbda_min, lmbda_max, n_lmbda, cv_method=cv_method, plot_mse=plot_mse)
+
+    if Lassoreg:
+        print(' -------------- Lasso')
+        if bv_trade:
+            bias_variance_tradeoff(x1, y1, z1, z1, degree_max, lmbda, cv_method=cvmet.kfold_CV_sklearn, reg_method=Lasso)
+        if find_l:
+            regression_lmbda(x1, y1, z1, z1, d, lmbda_min, lmbda_max, n_lmbda, cv_method=cvmet.kfold_CV, reg_method=Lasso, plot_mse=plot_mse)
+        if find_l_d:
+            lasso_bias_variance(x1, y1, z1, z1, degree_max, lmbda_min, lmbda_max, n_lmbda, plot_mse)
 
 
 def bias_variance_tradeoff(x, y, z_noise, z_true, degree_max = 14, lmbda=0, return_var = False, cv_method = cvmet.kfold_CV, reg_method=None, normalize=False):
@@ -425,5 +445,6 @@ def lasso_bias_variance(x, y, z_noise, z_true, degree_max=14, lmbda_min=-6, lmbd
         plt.legend()
         plt.show()
 
-#main()
-main_terrain()
+if __name__ == "__main__":
+    main(OLSreg=True, bv_trade=True)
+    #main_terrain(plot_beta=True, OLSreg=True)
