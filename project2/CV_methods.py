@@ -13,7 +13,7 @@ from sklearn.utils import shuffle
 
 import tools
 
-def kfold_CV(X, z, z_true, stddev=1, splits = 5, return_var = False, lmbda=0, normalize=None, return_beta_var=False, return_bv=False, franke_plot=False, reg_method=None):
+def kfold_CV(X, z, z_true, stddev=1, splits = 5, return_var = False, lmbda=0, return_beta_var=False, return_bv=False, franke_plot=False, reg_method=None):
     """ 
       k-fold cross validation                                   
       design matrix must be without the first column [1,1,...1] 
@@ -25,10 +25,14 @@ def kfold_CV(X, z, z_true, stddev=1, splits = 5, return_var = False, lmbda=0, no
     mse_splits_train = np.zeros(splits)
     r2_splits_test = np.zeros(splits)
 
-    bias_splits = np.zeros(splits)
-    variance_splits = np.zeros(splits)
+    #z_tilde_splits_test = np.zeros((splits, X.shape[0]/splits))
+    #z_tilde_splits_train = np.zeros((splits, X.shape[0]*(1-splits)/splits))
+
+    z_tilde_splits_test = np.zeros(splits, dtype=np.ndarray)
+    z_tilde_splits_train = np.zeros(splits, dtype=np.ndarray)
+
     betas = np.zeros((splits, X.shape[1]))
-    var_beta = np.zeros((splits,X.shape[1] ))
+    var_beta = np.zeros((splits, X.shape[1] ))
 
     i=0
     for train_idx, test_idx in kfold.split(X):
@@ -60,8 +64,8 @@ def kfold_CV(X, z, z_true, stddev=1, splits = 5, return_var = False, lmbda=0, no
         beta = XtXinv_train.dot(X_train_c.T).dot(z_train_c)
 
         # evaulate model on test set
-        z_tilde_test = np.matmul(X_test_c,beta) + z_train_mean
-        z_tilde_train = np.matmul(X_train_c,beta) + z_train_mean
+        z_tilde_splits_test[i] = np.matmul(X_test_c,beta) + z_train_mean
+        z_tilde_splits_train[i] = np.matmul(X_train_c,beta) + z_train_mean
         betas[i,:] = beta
 
         if reg_method==LinearRegression:
@@ -69,12 +73,10 @@ def kfold_CV(X, z, z_true, stddev=1, splits = 5, return_var = False, lmbda=0, no
         if reg_method==Ridge:
             var_beta[i,:] = stddev**2*np.diag( XtXinv_train.dot(X_train.T.dot(X_train)).dot(XtXinv_train.T) )
 
-        mse_splits_test[i] = np.mean((z_true_test_c - z_tilde_test)**2)
-        mse_splits_train[i] = np.mean((z_true_train_c - z_tilde_train)**2)
-        r2_splits_test[i] = tools.R2_score_func(z_true_test_c, z_tilde_test)
+        mse_splits_test[i] = np.mean((z_true_test_c - z_tilde_splits_test[i])**2)
+        mse_splits_train[i] = np.mean((z_true_train_c - z_tilde_splits_train[i])**2)
+        r2_splits_test[i] = tools.R2_score_func(z_true_test_c, z_tilde_splits_test[i])
 
-        bias_splits[i] = np.mean((z_true_test_c - np.mean(z_tilde_test[i]))**2)
-        variance_splits[i] = np.var(z_tilde_test)
         
         i += 1
 
@@ -82,24 +84,20 @@ def kfold_CV(X, z, z_true, stddev=1, splits = 5, return_var = False, lmbda=0, no
     mse_test = np.mean(mse_splits_test)
     mse_train = np.mean(mse_splits_train)
     r2_test = np.mean(r2_splits_test)
-    bias = np.mean(bias_splits)
-    variance = np.mean(variance_splits)
-    
 
-    if franke_plot:
-        return np.mean(z_tilde_test, axis=0)
-    if return_var and return_bv:
-        return mse_test, mse_train, r2_test, bias, variance
+    z_tilde_test = np.array([np.mean(z_tilde) for z_tilde in z_tilde_splits_test])
+    z_tilde_train = np.array([np.mean(z_tilde) for z_tilde in z_tilde_splits_train])   
 
-    elif return_var and not return_bv:
-        return mse_test, mse_train, r2_test
-    elif return_beta_var:
+
+    if return_beta_var:
         return np.mean(betas, axis=0), np.mean(var_beta, axis=0)#np.var(betas, axis=0)/(splits-1)
 
-    print(' CV MSE_scores   :', mse_test)
-    print(' CV R2 score        :', r2_test)
+    else:
+        return z_tilde_test, z_tilde_train, mse_test, mse_train, r2_test
+    #print(' CV MSE_scores   :', mse_test)
+    #print(' CV R2 score        :', r2_test)
 
-def kfold_CV_sklearn(X, z, z_true, stddev=1, splits = 5, normalize=False, return_var = False, lmbda=0, return_bv = False, return_beta_var=False, reg_method=Ridge):
+def kfold_CV_sklearn(X, z, z_true, stddev=1, splits = 5, return_var = False, lmbda=0, return_bv = False, return_beta_var=False, reg_method=Ridge):
     """ 
         k-fold cross validation using the sklearn library
         matrix X must be without the first intercept column [1,1,...1] 
@@ -111,8 +109,12 @@ def kfold_CV_sklearn(X, z, z_true, stddev=1, splits = 5, normalize=False, return
     mse_splits_train = np.zeros(splits)
     r2_splits_test = np.zeros(splits)
 
-    bias_splits = np.zeros(splits)
-    variance_splits = np.zeros(splits)
+    #z_tilde_splits_test = np.zeros((splits, X.shape[0]/splits))
+    #z_tilde_splits_train = np.zeros((splits, X.shape[0]*(splits-1)/splits))
+
+    z_tilde_splits_test = np.zeros(splits, dtype=np.ndarray)
+    z_tilde_splits_train = np.zeros(splits, dtype=np.ndarray)
+
     betas = np.zeros((splits, X.shape[1]))
 
     i=0
@@ -139,22 +141,21 @@ def kfold_CV_sklearn(X, z, z_true, stddev=1, splits = 5, normalize=False, return
         if reg_method == LinearRegression:
             model = reg_method(fit_intercept=True)
         elif reg_method == Ridge:
-            model = reg_method(alpha=lmbda, normalize=False, fit_intercept=True, max_iter = 1e5, tol = 0.001)
+            model = reg_method(alpha=lmbda, max_iter = 1e5, tol = 0.001)
         elif reg_method == Lasso:
-            model = reg_method(alpha=lmbda, normalize=False, precompute=True, fit_intercept=True, max_iter = 1e6, tol = 0.001)
+            model = reg_method(alpha=lmbda, precompute=True, max_iter = 1e6, tol = 0.001)
         model.fit(X_train_c, z_train_c)
         betas[i,:] = model.coef_
         # evaulate model on test set
-        z_tilde_test = model.predict(X_test_c) + scalerz.mean_
-        z_tilde_train = model.predict(X_train_c) + scalerz.mean_
+        z_tilde_splits_test[i] = model.predict(X_test_c) + scalerz.mean_
+        z_tilde_splits_train[i] = model.predict(X_train_c) + scalerz.mean_
 
 
-        mse_splits_test[i] = np.mean((z_true_test_c - z_tilde_test)**2)
-        mse_splits_train[i] = np.mean((z_true_train_c - z_tilde_train)**2)
-        r2_splits_test[i] = tools.R2_score_func(z_true_test_c, z_tilde_test)
+        mse_splits_test[i] = np.mean((z_true_test_c - z_tilde_splits_test[i])**2)
+        mse_splits_train[i] = np.mean((z_true_train_c - z_tilde_splits_train[i])**2)
+        r2_splits_test[i] = tools.R2_score_func(z_true_test_c, z_tilde_splits_test[i])
 
-        bias_splits[i] = np.mean((z_true_test_c - np.mean(z_tilde_test))**2)
-        variance_splits[i] = np.var(z_tilde_test)
+
         
         i += 1
 
@@ -163,18 +164,13 @@ def kfold_CV_sklearn(X, z, z_true, stddev=1, splits = 5, normalize=False, return
     mse_test = np.mean(mse_splits_test)
     mse_train = np.mean(mse_splits_train)
     r2_test = np.mean(r2_splits_test)
-    bias = np.mean(bias_splits)
-    variance = np.mean(variance_splits)
 
-    if return_var and return_bv:
-        return mse_test, mse_train, r2_test, bias, variance
+    z_tilde_test = np.array([np.mean(z_tilde) for z_tilde in z_tilde_splits_test])
+    z_tilde_train = np.array([np.mean(z_tilde) for z_tilde in z_tilde_splits_train])   
 
-    if return_var and not return_bv:
-        return mse_test, mse_train, r2_test
 
-    if return_beta_var:
-        return np.mean(betas, axis=0), np.var(betas, axis=0)/(splits-1)
-    
+    return z_tilde_test, z_tilde_train, mse_test, mse_train, r2_test
+
     #print('{} >= {}'.format(mse_test, bias + variance))
-    print(' CV sklearn MSE_scores:', mse_test)
-    print(' CV R2 score sklearn     :', r2_test)
+    #print(' CV sklearn MSE_scores:', mse_test)
+    #print(' CV R2 score sklearn     :', r2_test)

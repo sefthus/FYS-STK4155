@@ -14,7 +14,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split, KFold
 from sklearn.utils import shuffle
 
-from scipy.misc import imread, face
+from scipy.misc import face#,imread
 import scipy.ndimage as ndimage
 import tools
 import regression_methods as regmet
@@ -59,7 +59,7 @@ def FrankePlot(x, y, z, ztilde=None):
     plt.show()
 
 def terrain_data(skip_x=4, skip_y=4, plot_terrain=False, skip=False, cut_im=True, cut_x=1000, cut_y=1000):
-    terrain = imread('data\SRTM_data_Norway_1.tif')
+    terrain = plt.imread('data\SRTM_data_Norway_1.tif')
     #if plot_terrain:
     #    plt.figure()
     #    plt.title('Terrain over Norway 1')
@@ -91,7 +91,7 @@ def terrain_data(skip_x=4, skip_y=4, plot_terrain=False, skip=False, cut_im=True
     return terrain
 
 
-def main(d=5, degree_max=14, lmbda=1e-3, lmbda_max=1e2, lmbda_min=1e-6, stddev=1, calc_intercept=False, plot_intercept=False, FrankePlot=False, plot_beta=False, plot_mse=True, OLSreg=False, Ridgereg=False, Lassoreg=False, bv_trade=False, find_l_d=False, find_l=False, use_sklearn=False, CV=True):
+def main(d=5, degree_max=9, lmbda=1e-3, lmbda_max=1, lmbda_min=-6, n_lmbda=8, stddev=1, calc_intercept=False, plot_intercept=False, FrankePlot=False, plot_beta=False, plot_mse=True, OLSreg=False, Ridgereg=False, Lassoreg=False, bv_trade=False, find_l_d=False, find_l=False, use_sklearn=False, CV=True):
     """
 
      Main function to call on to perform linear regression
@@ -203,7 +203,7 @@ def main(d=5, degree_max=14, lmbda=1e-3, lmbda_max=1e2, lmbda_min=1e-6, stddev=1
             bias_variance_tradeoff(x1, y1, z1_noise, z1_true, d, lmbda, cv_method=cvmet.kfold_CV_sklearn, reg_method=Lasso)
 
         if find_l_d:
-            lasso_bias_variance(x1, y1, z1_noise, degree_max, lmbda_min, lmbda_max, n_lmbdaz1_true, plot_mse=plot_mse, normalize=False)
+            lasso_bias_variance(x1, y1, z1_noise, z1_true, degree_max, lmbda_min, lmbda_max, n_lmbda, plot_mse=plot_mse, normalize=False)
     
 def main_terrain(skip_x=40, skip_y=40, d=10, degree_max=20, lmbda=1e-3, lmbda_min=-7, lmbda_max=2, n_lmbda=10, use_sklearn=False, plot_terrain=False, bv_trade=False, find_l=False, find_l_d=False, plot_beta=False, plot_mse=True, OLSreg=False, Ridgereg=False, Lassoreg=False):
 
@@ -446,5 +446,5 @@ def lasso_bias_variance(x, y, z_noise, z_true, degree_max=14, lmbda_min=-6, lmbd
         plt.show()
 
 if __name__ == "__main__":
-    main(OLSreg=True, bv_trade=True)
+    main(Ridgereg=True,find_l_d=True)# bv_trade=True)
     #main_terrain(plot_beta=True, OLSreg=True)
