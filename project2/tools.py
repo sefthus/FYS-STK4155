@@ -1,4 +1,4 @@
-from mpl_toolkits.mplot3d import Axes3D
+#from mpl_toolkits.mplot3d import Axes3D
 import matplotlib as mpl
 mpl.use('TkAgg')
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
@@ -70,7 +70,7 @@ def accuracy_score_func(y_pred, y_test):
     return np.sum(y_test == y_pred) / len(y_test)
 
 
-def scale_data(X_train, X_test, y_train = None, y_test = None, cat_split=60, turn_dense=False):
+def scale_data(X_train, X_test, y_train = None, y_test = None, cat_split=59, turn_dense=False):
     """
         Scales the training and test data with StandardScaler() from scikit learn.
         
@@ -167,7 +167,7 @@ def FrankeFunction(x,y):
 
     return term1 + term2 + term3 + term4
 
-def drop_value(dframe, variables, val):
+def drop_value(dframe, variables, val, drop_less_than=False):
     
     """ 
         drop rows which have values equal to val
@@ -177,22 +177,12 @@ def drop_value(dframe, variables, val):
         val   : value to be dropped
         
     """
-    #print('hello')
-    #if any(isinstance(i, list) for i in variables):
-    #if variables.ndim==1:
-        #print(dframe[(variables == val)].index)
-    dframe = dframe.drop(dframe[(variables == val)].index)
-    #else:
-    #    old_remove_idx = []
-    #    dframe_old = dframe
-    #    for var in variables:
-    #        remove_idx=dframe_old[(var == val)].index
-    #        print(len(remove_idx))
-    #        remove_idx = list(filter(lambda i: i not in old_remove_idx, remove_idx))
-    #        print(len(remove_idx))
-    #        dframe = dframe.drop(remove_idx, axis=0)
-    #        old_remove_idx=remove_idx
-    
+
+    if drop_less_than:
+        dframe = dframe.drop(dframe[(variables<val)].index)
+    else:
+        dframe = dframe.drop(dframe[(variables == val)].index)
+
     return dframe
 
 def bestCurve(y):

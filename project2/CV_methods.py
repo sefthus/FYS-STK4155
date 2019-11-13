@@ -1,4 +1,4 @@
-from mpl_toolkits.mplot3d import Axes3D
+#from mpl_toolkits.mplot3d import Axes3D
 import matplotlib as mpl
 mpl.use('TkAgg')
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
@@ -13,7 +13,7 @@ from sklearn.utils import shuffle
 
 import tools
 
-def kfold_CV(X, z, z_true, stddev=1, splits = 5, return_var = False, lmbda=0, return_beta_var=False, return_bv=False, franke_plot=False, reg_method=None):
+def kfold_CV(X, z, z_true, splits = 5, return_var = False, lmbda=0, return_beta_var=False, return_bv=False, franke_plot=False, reg_method=None):
     """ 
       k-fold cross validation                                   
       design matrix must be without the first column [1,1,...1] 
@@ -68,11 +68,6 @@ def kfold_CV(X, z, z_true, stddev=1, splits = 5, return_var = False, lmbda=0, re
         z_tilde_splits_train[i] = np.matmul(X_train_c,beta) + z_train_mean
         betas[i,:] = beta
 
-        if reg_method==LinearRegression:
-            var_beta[i,:] = stddev**2*np.diag(XtXinv_train)
-        if reg_method==Ridge:
-            var_beta[i,:] = stddev**2*np.diag( XtXinv_train.dot(X_train.T.dot(X_train)).dot(XtXinv_train.T) )
-
         mse_splits_test[i] = np.mean((z_true_test_c - z_tilde_splits_test[i])**2)
         mse_splits_train[i] = np.mean((z_true_train_c - z_tilde_splits_train[i])**2)
         r2_splits_test[i] = tools.R2_score_func(z_true_test_c, z_tilde_splits_test[i])
@@ -97,7 +92,7 @@ def kfold_CV(X, z, z_true, stddev=1, splits = 5, return_var = False, lmbda=0, re
     #print(' CV MSE_scores   :', mse_test)
     #print(' CV R2 score        :', r2_test)
 
-def kfold_CV_sklearn(X, z, z_true, stddev=1, splits = 5, return_var = False, lmbda=0, return_bv = False, return_beta_var=False, reg_method=Ridge):
+def kfold_CV_sklearn(X, z, z_true, splits = 5, return_var = False, lmbda=0, return_bv = False, return_beta_var=False, reg_method=Ridge):
     """ 
         k-fold cross validation using the sklearn library
         matrix X must be without the first intercept column [1,1,...1] 

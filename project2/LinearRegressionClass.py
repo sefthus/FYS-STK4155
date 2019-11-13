@@ -10,13 +10,11 @@ class LinearRegressor:
                 X,
                 z_true,
                 z_noise,
-                z_stddev,
                 cv_method='sklearn'):
 
         self.X = X
         self.z_true = z_true
         self.z_noise = z_noise
-        self.z_stddev = z_stddev
 
         self.cv_method = cv_method
         self.cv_methods()
@@ -32,7 +30,7 @@ class LinearRegressor:
 
     def OLSRegressor(self):
         z_pred_test, z_pred_train, mse_test, mse_train, r2_test = self.cv_f(self.X, self.z_noise, self.z_true, 
-                                                                            stddev=self.z_stddev, reg_method=LinearRegression)
+                                                                            reg_method=LinearRegression)
 
         self.z_pred_test = z_pred_test
         self.z_pred_train = z_pred_train
@@ -42,7 +40,7 @@ class LinearRegressor:
 
     def RidgeRegressor(self, lmbda):
         z_pred_test, z_pred_train, mse_test, mse_train, r2_test = self.cv_f(self.X, self.z_noise, self.z_true, 
-                                                                            stddev=self.z_stddev, lmbda=lmbda, reg_method=Ridge)
+                                                                            lmbda=lmbda, reg_method=Ridge)
         self.z_pred_test = z_pred_test
         self.z_pred_train = z_pred_train
         self.mse_test = mse_test
@@ -51,7 +49,7 @@ class LinearRegressor:
         
     def LassoRegressor(self, lmbda):
         z_pred_test, z_pred_train, mse_test, mse_train, r2_test = cv.kfold_CV_sklearn(self.X, self.z_noise, 
-                                                                            self.z_true, stddev=self.z_stddev, lmbda=lmbda, reg_method=Lasso)
+                                                                            self.z_true, lmbda=lmbda, reg_method=Lasso)
         self.z_pred_test = z_pred_test
         self.z_pred_train = z_pred_train
         self.mse_test = mse_test

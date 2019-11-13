@@ -12,23 +12,25 @@ from sklearn.model_selection import train_test_split, KFold
 from sklearn.utils import shuffle
 
 import tools
-
+seed = 2018
+np.random.seed(seed)
 def kfold_CV(X, z, z_true, stddev=1, splits = 5, return_var = False, lmbda=0, normalize=None, return_beta_var=False, return_bv=False, franke_plot=False, reg_method=None):
     """ 
       k-fold cross validation                                   
       design matrix must be without the first column [1,1,...1] 
     """
 
-    kfold = KFold(n_splits=splits, shuffle=True)#, random_state=0)
+    kfold = KFold(n_splits=splits, shuffle=True, random_state=seed)
 
     mse_splits_test = np.zeros(splits)
     mse_splits_train = np.zeros(splits)
     r2_splits_test = np.zeros(splits)
+    r2_splits_train = np.zeros(splits)
 
     bias_splits = np.zeros(splits)
     variance_splits = np.zeros(splits)
     betas = np.zeros((splits, X.shape[1]))
-    var_beta = np.zeros((splits,X.shape[1] ))
+    var_beta = np.zeros((splits,X.shape[1]))
 
     i=0
     for train_idx, test_idx in kfold.split(X):
@@ -72,6 +74,7 @@ def kfold_CV(X, z, z_true, stddev=1, splits = 5, return_var = False, lmbda=0, no
         mse_splits_test[i] = np.mean((z_true_test_c - z_tilde_test)**2)
         mse_splits_train[i] = np.mean((z_true_train_c - z_tilde_train)**2)
         r2_splits_test[i] = tools.R2_score_func(z_true_test_c, z_tilde_test)
+        r2_splits_train[i] = tools.R2_score_func(z_true_train_c, z_tilde_train)
 
         bias_splits[i] = np.mean((z_true_test_c - np.mean(z_tilde_test[i]))**2)
         variance_splits[i] = np.var(z_tilde_test)
@@ -82,6 +85,8 @@ def kfold_CV(X, z, z_true, stddev=1, splits = 5, return_var = False, lmbda=0, no
     mse_test = np.mean(mse_splits_test)
     mse_train = np.mean(mse_splits_train)
     r2_test = np.mean(r2_splits_test)
+    r2_train = np.mean(r2_splits_train)
+
     bias = np.mean(bias_splits)
     variance = np.mean(variance_splits)
     
@@ -89,15 +94,17 @@ def kfold_CV(X, z, z_true, stddev=1, splits = 5, return_var = False, lmbda=0, no
     if franke_plot:
         return np.mean(z_tilde_test, axis=0)
     if return_var and return_bv:
-        return mse_test, mse_train, r2_test, bias, variance
+        return mse_test, mse_train, r2_test, r2_train, bias, variance
 
     elif return_var and not return_bv:
-        return mse_test, mse_train, r2_test
+        return mse_test, mse_train, r2_test, r2_train
     elif return_beta_var:
         return np.mean(betas, axis=0), np.mean(var_beta, axis=0)#np.var(betas, axis=0)/(splits-1)
 
-    print(' CV MSE_scores   :', mse_test)
-    print(' CV R2 score        :', r2_test)
+    print(' CV MSE_test    :', mse_test)
+    print(' CV MSE train   :', mse_train)
+    print(' CV R2 score test :', r2_test)
+    print(' CV R2 score train:', r2_train)
 
 def kfold_CV_sklearn(X, z, z_true, stddev=1, splits = 5, normalize=False, return_var = False, lmbda=0, return_bv = False, return_beta_var=False, reg_method=Ridge):
     """ 
@@ -105,11 +112,12 @@ def kfold_CV_sklearn(X, z, z_true, stddev=1, splits = 5, normalize=False, return
         matrix X must be without the first intercept column [1,1,...1] 
     """
 
-    kfold = KFold(n_splits=splits, shuffle=True)#, random_state=0)
+    kfold = KFold(n_splits=splits, shuffle=True, random_state=seed)
 
     mse_splits_test = np.zeros(splits)
     mse_splits_train = np.zeros(splits)
     r2_splits_test = np.zeros(splits)
+    r2_splits_train = np.zeros(splits)
 
     bias_splits = np.zeros(splits)
     variance_splits = np.zeros(splits)
@@ -141,7 +149,7 @@ def kfold_CV_sklearn(X, z, z_true, stddev=1, splits = 5, normalize=False, return
         elif reg_method == Ridge:
             model = reg_method(alpha=lmbda, normalize=False, fit_intercept=True, max_iter = 1e5, tol = 0.001)
         elif reg_method == Lasso:
-            model = reg_method(alpha=lmbda, normalize=False, precompute=True, fit_intercept=True, max_iter = 1e6, tol = 0.001)
+            model = reg_method(alpha=lmbda, normalize=False, precompute=True, fit_intercept=True, max_iter = 1e7, tol = 0.001)
         model.fit(X_train_c, z_train_c)
         betas[i,:] = model.coef_
         # evaulate model on test set
@@ -152,6 +160,7 @@ def kfold_CV_sklearn(X, z, z_true, stddev=1, splits = 5, normalize=False, return
         mse_splits_test[i] = np.mean((z_true_test_c - z_tilde_test)**2)
         mse_splits_train[i] = np.mean((z_true_train_c - z_tilde_train)**2)
         r2_splits_test[i] = tools.R2_score_func(z_true_test_c, z_tilde_test)
+        r2_splits_train[i] = tools.R2_score_func(z_true_train_c, z_tilde_train)
 
         bias_splits[i] = np.mean((z_true_test_c - np.mean(z_tilde_test))**2)
         variance_splits[i] = np.var(z_tilde_test)
@@ -163,18 +172,21 @@ def kfold_CV_sklearn(X, z, z_true, stddev=1, splits = 5, normalize=False, return
     mse_test = np.mean(mse_splits_test)
     mse_train = np.mean(mse_splits_train)
     r2_test = np.mean(r2_splits_test)
+    r2_train = np.mean(r2_splits_train)
     bias = np.mean(bias_splits)
     variance = np.mean(variance_splits)
 
     if return_var and return_bv:
-        return mse_test, mse_train, r2_test, bias, variance
+        return mse_test, mse_train, r2_test, r2_train, bias, variance
 
     if return_var and not return_bv:
-        return mse_test, mse_train, r2_test
+        return mse_test, mse_train, r2_test, r2_train
 
     if return_beta_var:
         return np.mean(betas, axis=0), np.var(betas, axis=0)/(splits-1)
     
     #print('{} >= {}'.format(mse_test, bias + variance))
-    print(' CV sklearn MSE_scores:', mse_test)
-    print(' CV R2 score sklearn     :', r2_test)
+    print(' CV sklearn MSE test:', mse_test)
+    print(' CV sklearn MSE train:', mse_train)
+    print(' CV R2 score sklearn test   :', r2_test)
+    print(' CV R2 score sklearn  train:', r2_train)

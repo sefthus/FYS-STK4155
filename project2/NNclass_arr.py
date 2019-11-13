@@ -100,27 +100,19 @@ class NeuralNetwork:
         return 1 * (x > 0)
 
     def softmax(self,x):
-        exp_term = np.exp(x)
+        """ subtract max(x_col) to prevent overflow """
+        exp_term = np.exp(x-np.max(x, axis=1))
         return exp_term/np.sum(exp_term, axis=1, keepdims=True)
 
     def mean_squared_error(self, y_true, y_pred):
-        return np.mean((y_true - y_pred)**2)
+        return 0.5*np.mean((y_true - y_pred)**2)
     
-    def grad_w_mean_squared_error(self, y_true, y_pred):
-        # DOUBLE CHECK THIS
-        return -2*(y_true - y_pred) * y_pred * (1 - y_pred) * self.z_h[self.n_hidden_layers]
-       
-    def grad_beta_mean_squared_error(self, X, y_true, y_pred):
-        return -2*(y_true - y_pred)
 
     def cross_entropy(self, y_true, y_pred):
         #y_pred_min = self.sigmoid(-x) #=1-sigmoid(x) = sigmoid(-x)
         y_pred_min = 1 - y_pred 
 
         return -np.sum(y_true*np.log(y_pred) + (1-y_true)*np.log(y_pred_min))
-
-    def grad_beta_cross_entropy(self, X, y_true, y_pred):
-        return - X.T.dot(y_true - y_pred)
 
 
 

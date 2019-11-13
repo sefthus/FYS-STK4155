@@ -91,7 +91,11 @@ def terrain_data(skip_x=4, skip_y=4, plot_terrain=False, skip=False, cut_im=True
     return terrain
 
 
-def main(d=5, degree_max=9, lmbda=1e-3, lmbda_max=1, lmbda_min=-6, n_lmbda=8, stddev=1, calc_intercept=False, plot_intercept=False, FrankePlot=False, plot_beta=False, plot_mse=True, OLSreg=False, Ridgereg=False, Lassoreg=False, bv_trade=False, find_l_d=False, find_l=False, use_sklearn=False, CV=True):
+def main(d=5, degree_max=9, lmbda=1e-3, lmbda_max=1, lmbda_min=-6, 
+        n_lmbda=8, stddev=1, calc_intercept=False, plot_intercept=False, 
+        FrankePlot=False, plot_beta=False, plot_mse=True, OLSreg=False, 
+        Ridgereg=False, Lassoreg=False, bv_trade=False, find_l_d=False, 
+        find_l=False, use_sklearn=False, CV=True):
     """
 
      Main function to call on to perform linear regression
@@ -118,7 +122,9 @@ def main(d=5, degree_max=9, lmbda=1e-3, lmbda_max=1, lmbda_min=-6, n_lmbda=8, st
     # Make data.
     print(' make data')
     x = np.arange(0, 1, 0.01)
+    #x = np.sort(np.random.random(100))
     y = np.arange(0, 1, 0.01)
+    #y = np.sort(np.random.random(100))
 
     x, y = np.meshgrid(x, y)
     z = FrankeFunction(x, y)
@@ -135,7 +141,7 @@ def main(d=5, degree_max=9, lmbda=1e-3, lmbda_max=1, lmbda_min=-6, n_lmbda=8, st
     z1_noise = np.ravel(z) + np.random.normal(0, stddev, size=z1_true.shape) # adding noise
 
     print(' make design matrix')
-    X = tools.create_design_matrix(x, y, d=d)
+    X = tools.create_design_matrix(x1, y1, d=d)
     if not calc_intercept:
         X = X[:, 1:]
     
@@ -200,7 +206,7 @@ def main(d=5, degree_max=9, lmbda=1e-3, lmbda_max=1, lmbda_min=-6, n_lmbda=8, st
             tools.plot_CI(beta,varbeta)
 
         if bv_trade:
-            bias_variance_tradeoff(x1, y1, z1_noise, z1_true, d, lmbda, cv_method=cvmet.kfold_CV_sklearn, reg_method=Lasso)
+            bias_variance_tradeoff(x1, y1, z1_noise, z1_true, degree_max, lmbda=lmbda, cv_method=cvmet.kfold_CV_sklearn, reg_method=Lasso)
 
         if find_l_d:
             lasso_bias_variance(x1, y1, z1_noise, z1_true, degree_max, lmbda_min, lmbda_max, n_lmbda, plot_mse=plot_mse, normalize=False)
@@ -266,6 +272,7 @@ def bias_variance_tradeoff(x, y, z_noise, z_true, degree_max = 14, lmbda=0, retu
     error_test = np.zeros(degree_max-1)
     error_train = np.zeros(degree_max-1)
     r2_test = np.zeros(degree_max-1)
+    r2_train = np.zeros(degree_max-1)
 
     bias = np.zeros(degree_max-1)
     variance = np.zeros(degree_max-1)
@@ -278,11 +285,12 @@ def bias_variance_tradeoff(x, y, z_noise, z_true, degree_max = 14, lmbda=0, retu
         print('degree:', d+1)
 
         X = tools.create_design_matrix(x, y, d+1)
-        mse_deg_test, mse_deg_train, r2_deg_test, bias_deg, variance_deg = cv_method(X[:,1:], z_noise, z_true, return_var=True, lmbda=lmbda, normalize=normalize, return_bv=True, reg_method=reg_method)
+        mse_deg_test, mse_deg_train, r2_deg_test, r2_deg_train, bias_deg, variance_deg = cv_method(X[:,1:], z_noise, z_true, return_var=True, lmbda=lmbda, normalize=normalize, return_bv=True, reg_method=reg_method)
 
         error_test[d] = mse_deg_test
         error_train[d] = mse_deg_train
         r2_test[d] = r2_deg_test
+        r2_train[d] = r2_deg_train
 
         #print('err_test:', error_test[d])
         bias[d] = bias_deg
@@ -290,12 +298,23 @@ def bias_variance_tradeoff(x, y, z_noise, z_true, degree_max = 14, lmbda=0, retu
         vb[d] = variance[d] + bias[d]
 
     if return_var:
-        return error_test, error_train, r2_test, bias, variance, vb
+        return error_test, error_train, r2_test, r2_train, bias, variance, vb
     
     indx = np.argmin(error_test)
     print('kfold min MSE degree: ', polydegree[indx])
-    print('kfold min MSE    : ', np.min(error_test))
-    print('kfold min_err r2 : ', r2_test[indx])
+    print('kfold min MSE test  : ', error_test[indx])
+    print('kfold min MSE train : ', error_train[indx])
+    print('kfold min_err test r2  : ', r2_test[indx])
+    print('kfold min_err train r2 : ', r2_train[indx])
+
+    '''
+    indx_ = np.argmin(error_test[error_test>error_train])
+    print('kfold min MSE degree: ', polydegree[indx_])
+    print('kfold min MSE test  : ', error_test[indx_])
+    print('kfold min MSE train : ', error_train[indx_])
+    print('kfold min_err test r2  : ', r2_test[indx_])
+    print('kfold min_err train r2 : ', r2_train[indx_])
+    '''
 
     fig = plt.figure()
     plt.plot(polydegree, error_test, label='Test Error')
@@ -323,6 +342,7 @@ def regression_lmbda(x, y, z_noise, z_true, d=5, lmbda_min=-6,lmbda_max=2, n_lmb
     error_test = np.zeros(len(lmbda))
     r2_test = np.zeros(len(lmbda))
     error_train = np.zeros(len(lmbda))
+    r2_train = np.zeros(len(lmbda))
 
     bias = np.zeros(len(lmbda))
     variance = np.zeros(len(lmbda))
@@ -333,11 +353,12 @@ def regression_lmbda(x, y, z_noise, z_true, d=5, lmbda_min=-6,lmbda_max=2, n_lmb
 
         print('lambda:',lmbda[i])
 
-        mse_l_test, mse_l_train, r2_l_test, *junk = cv_method(X[:,1:], z_noise, z_true, return_var=True, lmbda=lmbda[i], normalize=normalize, reg_method=reg_method, return_bv=True)
+        mse_l_test, mse_l_train, r2_l_test, r2_l_train, *junk= cv_method(X[:,1:], z_noise, z_true, return_var=True, lmbda=lmbda[i], normalize=normalize, reg_method=reg_method, return_bv=True)
         
         error_test[i] = mse_l_test
         error_train[i] = mse_l_train
         r2_test[i] = r2_l_test
+        r2_train[i] = r2_l_train
 
         print(error_test[i])
         #bias[i] = bias_l
@@ -345,9 +366,11 @@ def regression_lmbda(x, y, z_noise, z_true, d=5, lmbda_min=-6,lmbda_max=2, n_lmb
         #vb[i] = variance[i] + bias[i]
 
     indx = np.argmin(error_test)
-    print('min MSE      :', error_test[indx])
+    print('min MSE test :', error_test[indx])
+    print('min MSE train:', error_train[indx])
     print('minMSE lambda:', lmbda[indx])
-    print('max r2       :', r2_test[indx])
+    print('max r2 test  :', r2_test[indx])
+    print('max r2 train :', r2_train[indx])
     
     #mse_te, mse_tr, r2_te, *junk = cv_method(X[:,1:], z_noise, z_true, return_var=True, lmbda=1e-3, normalize=normalize, return_bv=True)
     #print('min MSE      :', mse_te)
@@ -374,18 +397,24 @@ def ridge_bias_variance(x, y, z_noise, z_true, degree_max=14, lmbda_min=-6, lmbd
 
     min_error = np.zeros_like(lmbda)
     min_r2 = np.zeros_like(lmbda)
+    min_error_train = np.zeros_like(lmbda)
+    min_r2_train = np.zeros_like(lmbda)
+
     min_degrees = np.zeros_like(lmbda)
 
     for i in range(len(lmbda)):
 
         print('             lambda:',lmbda[i])  
 
-        error_test, error_train, r2_test, *junk = bias_variance_tradeoff(x, y, z_noise, z_true, degree_max, lmbda=lmbda[i], return_var = True, cv_method=cv_method, reg_method=Ridge)#, normalize=normalize)
+        error_test, error_train, r2_test, r2_train, *junk = bias_variance_tradeoff(x, y, z_noise, z_true, degree_max, lmbda=lmbda[i], return_var = True, cv_method=cv_method, reg_method=Ridge)#, normalize=normalize)
 
-        min_r2[i] = np.max(r2_test)
+        arg_mse = np.argmin(error_test)
+        min_r2[i] = r2_test[arg_mse]
+        min_r2_train[i] = r2_train[arg_mse]
         min_error[i] = np.min(error_test)
+        min_error_train[i] = error_train[arg_mse]
         print(np.argmin(error_test))
-        min_degrees[i] = polydegree[np.argmin(error_test)]
+        min_degrees[i] = polydegree[arg_mse]
 
         plt.plot(polydegree, error_test, label=(r'$\lambda$=%.2e' %lmbda[i]))
 
@@ -393,9 +422,14 @@ def ridge_bias_variance(x, y, z_noise, z_true, degree_max=14, lmbda_min=-6, lmbd
     idx_min = np.argmin(min_error)
 
     print('min lmbda:', lmbda[idx_min])
-    print('min error:', min_error[idx_min])
+    print('min error      :', min_error[idx_min])
+    print('min error train:', min_error_train[idx_min])
+    print('max r2 score      :', min_r2[idx_min])
+    print('max r2 score train:', min_r2_train[idx_min])
+
     print('min error poly:', min_degrees[idx_min])
-    print('max r2 score:', min_r2[idx_min])
+    
+
 
     if plot_mse:
         plt.plot(min_degrees[idx_min], min_error[idx_min], 'kx')
@@ -418,23 +452,36 @@ def lasso_bias_variance(x, y, z_noise, z_true, degree_max=14, lmbda_min=-6, lmbd
     min_r2 = np.zeros_like(lmbda)
     min_degrees = np.zeros_like(lmbda)
 
+    min_error_train = np.zeros_like(lmbda)
+    min_r2_train = np.zeros_like(lmbda)
+
     for i in range(len(lmbda)):
 
         print('             lambda:',lmbda[i])  
 
-        error_test, error_train, r2_test, *junk = bias_variance_tradeoff(x, y, z_noise, z_true, degree_max, lmbda=lmbda[i], return_var = True, cv_method = cvmet.kfold_CV_sklearn, reg_method = Lasso, normalize=normalize)
+        error_test, error_train, r2_test, r2_train, *junk = bias_variance_tradeoff(x, y, z_noise, z_true, degree_max, lmbda=lmbda[i], return_var = True, cv_method = cvmet.kfold_CV_sklearn, reg_method = Lasso, normalize=normalize)
 
-        min_r2[i] = np.max(r2_test)
+        arg_min = np.argmin(error_test)
+        min_r2[i] = r2_test[arg_min]
         min_error[i] = np.min(error_test)
-        min_degrees[i] = polydegree[np.argmin(error_test)]
+        min_degrees[i] = polydegree[arg_min]
+
+        min_r2_train[i] = r2_train[arg_min]
+        min_error_train[i] = np.min(error_train)
         plt.plot(polydegree, error_test, label=(r'$\lambda$=%.2e' %lmbda[i]))
 
     #plt.plot(polydegree, error_train, label=(r'$\lambda=$%.2e Train Error', lmbda[i]))
     idx_min = np.argmin(min_error)
-    print('min error:', min_error[idx_min])
-    print('min error poly:', min_degrees[idx_min])
+    print('lambda:',lmbda[idx_min])
+    print('min error      :', min_error[idx_min])
+    print('min error_train:', min_error_train[idx_min])
     print('max r2 score:', min_r2[idx_min])
+    print('max r2 score train:', min_r2_train[idx_min])
+
+    print('min error poly:', min_degrees[idx_min])
+
     
+
     if plot_mse:
         plt.plot(min_degrees[idx_min], min_error[idx_min], 'x')
         plt.xlabel('polynomial degree', size=14)
@@ -446,5 +493,7 @@ def lasso_bias_variance(x, y, z_noise, z_true, degree_max=14, lmbda_min=-6, lmbd
         plt.show()
 
 if __name__ == "__main__":
-    main(Ridgereg=True,find_l_d=True)# bv_trade=True)
+    main(OLSreg=True, bv_trade=True)
+    #main(Ridgereg=True, d=5, lmbda=1e-2, CV=True)
+    #main(Lassoreg=True, d=5, lmbda=1e-6, CV=True)
     #main_terrain(plot_beta=True, OLSreg=True)
