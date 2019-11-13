@@ -125,7 +125,7 @@ def main_lingreg(calc_intercept=False, Franke_plot=False,turn_dense=False, do_li
 
         X_train, X_test, z_train, z_test, zscale_mean = tools.scale_data(X_train, X_test, z_train.reshape(-1,1), z_test.reshape(-1,1), cat_split=None)
         
-        n_categories = 1 #=1 when lin. reg
+        n_categories = 1
         n_hidden_layers = 2
 
         n_hidden_neurons1 = int(np.floor(np.mean(n_categories + X_train.shape[1])))
@@ -136,18 +136,14 @@ def main_lingreg(calc_intercept=False, Franke_plot=False,turn_dense=False, do_li
         
         n_hidden_neurons3 = int(np.round(2./3*X_train.shape[1]) + n_categories)
         print('No of hidden neurons:',n_hidden_neurons3)
-        #sys.exit()
-
-        #hidden_layer_sizes = n_hidden_layers*[n_hidden_neurons,]
-        #hidden_layer_sizes = [n_hidden_neurons, int(np.round(n_hidden_neurons/2))]
+ 
         print('no of input neurons', X_train.shape[1])
 
 
         if do_NN_np:
             epochs = 300
-            batch_size = 40
-            print(X_train.shape[0])
-            #sys.exit()
+            batch_size = 100
+
             eta = 0.001
             lmbd = 0.0001
 
@@ -179,11 +175,8 @@ def main_lingreg(calc_intercept=False, Franke_plot=False,turn_dense=False, do_li
                 for j, lmbd in enumerate(lmbd_vals):
                     print('eta:',eta, 'lambda:', lmbd)
                     dnn = aNeuralNetwork(X_train, z_train, eta=eta, lmbd=lmbd, epochs=epochs, batch_size=batch_size,
-                                        n_hidden_neurons=hidden_layer_sizes, n_categories=n_categories, init_method=init_method,
+                                        n_hidden_neurons=hidden_sizes, n_categories=n_categories, init_method=init_method,
                                         out_activation = out_activation, hidden_activation=hidden_activation, cost_f = cost_f)
-
-                    #dnn = oNeuralNetwork(X_train, z_train_onehot, eta=eta, lmbd=lmbd, epochs=epochs, batch_size=batch_size,
-                    #                    n_hidden_neurons=n_hidden_neurons, n_categories=n_categories, init_method=init_method)
 
                     dnn.train()
 
@@ -249,46 +242,7 @@ def main_lingreg(calc_intercept=False, Franke_plot=False,turn_dense=False, do_li
             train_r2 = np.zeros((len(eta_vals), len(lmbd_vals)))
             test_r2 = np.zeros((len(eta_vals), len(lmbd_vals)))
             
-            hidden_size01 = (n_hidden_neurons1)
-            hidden_size02 = (n_hidden_neurons2)
-            hidden_size03 = (n_hidden_neurons3)
 
-            hidden_size1 = n_hidden_layers*(n_hidden_neurons1,) # (neurons,neurons,...)
-            hidden_size2 = (n_hidden_neurons1, int(np.round(n_hidden_neurons1/2)))
-
-            hidden_size3 = n_hidden_layers*(n_hidden_neurons2,) # (neurons,neurons,...)
-            hidden_size4 = (n_hidden_neurons2, int(np.round(n_hidden_neurons2/2)))
-
-            hidden_size5 = n_hidden_layers*(n_hidden_neurons3,) # (neurons,neurons,...)
-            hidden_size6 = (n_hidden_neurons3, int(np.round(n_hidden_neurons3/2)))
-
-
-            #layers = [hidden_size01, hidden_size02, hidden_size03, hidden_size1, hidden_size2, hidden_size3, hidden_size4, hidden_size5, hidden_size6]
-            layers = [hidden_size01, hidden_size02, hidden_size03, hidden_size1, hidden_size3, hidden_size5]
-
-            param_grid = [
-            {
-            'activation' : ['logistic', 'relu'],
-            'solver' : ['sgd'],
-            'hidden_layer_sizes': layers,
-            'alpha': lmbd_vals,
-            'learning_rate_init': eta_vals,
-            'batch_size': [40, 100, 500, 800, 1000],
-            'max_iter': [300, 1000, 2000]
-            }
-            ]
-
-            clf = GridSearchCV(MLPRegressor(), param_grid,
-                                    scoring=['neg_mean_squared_error','r2'], 
-                                    refit='neg_mean_squared_error')
-            clf.fit(X_train, z_train.ravel())
-            clf.predict(X_test)
-
-            
-            print("Best parameters set found on development set:")
-            print(clf.best_params_)
-            sys.exit()
-            '''
             for i, eta in enumerate(eta_vals):
                 costs = np.zeros((len(lmbd_vals), epochs))
                 for j, lmbd in enumerate(lmbd_vals):
@@ -311,12 +265,7 @@ def main_lingreg(calc_intercept=False, Franke_plot=False,turn_dense=False, do_li
 
                     #costs[j,:] = dnn_sk.loss_
                     print(dnn_sk.loss_)
-            #plt.plot(np.linspace(1, epochs+1, epochs), dnn_sk.loss_cruve_, label=('eta = ', lmbd_vals[-1]))
 
-            #plt.xlabel('epoch')
-            #plt.ylabel('cost function')
-            #plt.ylim([-1,1e2])
-            #plt.show()
             arg_min = np.unravel_index(test_mse.argmin(), test_mse.shape)
             print('arg_max:', arg_min)
             print('best param: eta:', eta_vals[arg_min[0]], 'lambda:',lmbd_vals[arg_min[1]])
@@ -324,7 +273,7 @@ def main_lingreg(calc_intercept=False, Franke_plot=False,turn_dense=False, do_li
             print('best mse train score:', train_mse[arg_min])
             print('best r2 test score:', test_r2[arg_min])
             print('best r2 train score:', train_r2[arg_min])
-            '''
+            
             if (len(eta_vals)<2 and len(lmbd_vals)<2):
 
                 print('eta:', eta, 'lambda:', lmbd)

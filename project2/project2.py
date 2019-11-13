@@ -15,11 +15,11 @@ from imblearn.over_sampling import SMOTE
 
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, Normalizer, OneHotEncoder
-from sklearn.metrics import confusion_matrix, accuracy_score, recall_score, roc_auc_score, mean_squared_error, r2_score, f1_score
-from sklearn.linear_model import LogisticRegression, SGDRegressor
+from sklearn.preprocessing import StandardScaler,  OneHotEncoder
+from sklearn.metrics import confusion_matrix, accuracy_score, recall_score, roc_auc_score, f1_score
+from sklearn.linear_model import LogisticRegression
 from sklearn.utils import shuffle
-from sklearn.neural_network import MLPClassifier, MLPRegressor
+from sklearn.neural_network import MLPClassifier
 
 from scikitplot.metrics import plot_cumulative_gain
 from scikitplot.helpers import cumulative_gain_curve
@@ -28,14 +28,14 @@ from original_NNclass import NeuralNetwork as oNeuralNetwork
 from NNclass_arr import NeuralNetwork as aNeuralNetwork
 
 import tools
-from LinearRegressionClass import LinearRegressor as LinReg
+
 from LogisticRegressionClass import LogisticRegressor
 
 seed = 3155
 np.random.seed(seed)
 
 
-def create_df(filename=r'.\data\default of credit card clients.xls', remove_nan=True, remove_pay0=True, resample=False):
+def create_df(filename=r'.\data\default of credit card clients.xls', remove_pay0=True, resample=False):
     """
         Creates a dataframe from filename using pandas. Removes invalid values
         from the factors. 
@@ -45,9 +45,9 @@ def create_df(filename=r'.\data\default of credit card clients.xls', remove_nan=
         Returns the design matrix X and respone y.
 
         filename  : the filename of the dataframe
-        remove_nan: if True, removes invalid values from the factors
         remove_pay0: if True, removes all instances where PAY_X is zero, this will
                      remove over 80% of the data
+        resample: if True, SMOTE resampling is used to balance the data
     """
 
     filename = filename
@@ -77,23 +77,25 @@ def create_df(filename=r'.\data\default of credit card clients.xls', remove_nan=
     print('after removing instances where all bill statements or paid amount is zero:', df.shape)
 
     
-    if remove_nan: # remove unspecified variables
-        print('df shape before illegal values removed:',df.shape)
-        print('df after removing illegals:')
+    
+    print('df shape before illegal values removed:',df.shape)
+    print('df after removing illegals:')
 
-        df = pay_remove_value(df,-2)
-        print('  remove pay=-2', df.shape)
+    df = pay_remove_value(df,-2)
+    print('  remove pay=-2', df.shape)
 
-        df = bill_amt_remove_negative(df, 0)
-        print('  remove Pay_amt, bill_amt <0:', df.shape)
+    df = bill_amt_remove_negative(df, 0)
+    print('  remove Pay_amt, bill_amt <0:', df.shape)
 
-        if remove_pay0:# over 80 % of data lost
 
-            df = pay_remove_value(df,0)
-            print('  remove pay=0:',df.shape)
+    df = edu_marr_remove_value(df)
+    print('  remove edy=0,5,6, marriage=0:', df.shape)
 
-        df = edu_marr_remove_value(df)
-        print('  remove edy=0,5,6, marriage=0:', df.shape)
+    if remove_pay0:# over 80 % of data lost
+
+        df = pay_remove_value(df,0)
+        print('  remove pay=0:',df.shape)
+
 
 
     # features and targets
@@ -220,7 +222,7 @@ def logistic_regression(X_train, X_test, y_train, y_test,
     prob_y_train = LogReg.predict_probabilities_numpy(X_train)
 
     if plot_cost:
-        LogReg.plot_cost_function(save=save, name='cost_eta_decay_fullset')
+        LogReg.plot_cost_function(save=save, name='cost_eta_decay_full')
 
     auc_test, area_ratio_test = auc_CGC(y_test, prob_y_test)
 
@@ -238,8 +240,11 @@ def logistic_regression(X_train, X_test, y_train, y_test,
     print('AUC CGC:', auc_test)
     print('Area ratio:', area_ratio_test)
 
-    return accuracy_score(y_test, y_pred_test), accuracy_score(y_train, y_pred_train)
-    sys.exit()
+    a=accuracy_score(y_test, y_pred_test)
+    b=accuracy_score(y_train, y_pred_train)
+    #print(a,b)
+    #return a,b
+    #sys.exit()
     # -------- calcuate y_pred using sklearn's logistic regression
     print('\n ---------- Log reg with sklearn')
 
@@ -273,9 +278,9 @@ def logistic_regression(X_train, X_test, y_train, y_test,
         plot_cum_gain_chart(y_train, prob_y_train, prob_ysk_train)
 
 
-def main_logreg(remove_nan=True, remove_pay0=True, turn_dense=False, do_logreg=True, do_NN=True, do_NN_np=False, do_NN_sk=True, plot_cumgain_test=False, plot_cumgain_train=False, vizualize_scores=True):
+def main_logreg(remove_pay0=True, resample=False, turn_dense=False, do_logreg=True, do_NN=True, do_NN_np=False, do_NN_sk=True, plot_cumgain_test=False, plot_cumgain_train=False, vizualize_scores=True):
     
-    X, y = create_df(remove_nan=remove_nan, remove_pay0=remove_pay0, resample=False)
+    X, y = create_df(remove_pay0=remove_pay0, resample=resample)
 
     training_share = 0.7
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1-training_share, shuffle=True, random_state=seed)
@@ -289,36 +294,23 @@ def main_logreg(remove_nan=True, remove_pay0=True, turn_dense=False, do_logreg=T
     # ---------- calculate y_pred using log. reg. and stochastic gradient descent
     if do_logreg:
         
-        M = 128
-        Ms = np.array([20,30])#,40,60,100,200,300,500,800,1000])
-        ac_test, ac_train = np.zeros_like(Ms), np.zeros_like(Ms)
-        n_epochs = 200
-        print('number of batches', M)
-        print('number of epochs', n_epochs)
-        for i in range(len(Ms)):
-            ac_test[i], ac_train[i] = logistic_regression(X_train, X_test, y_train, y_test, 
-                                M = Ms[i], n_epochs=n_epochs, plot_cost=False, save=False)
-    idx = np.argmax(ac_test)
-    print(idx)
-    print('best ac test, train', ac_test[idx], ac_train[idx])
-    print('best batch', Ms[idx])
+        M = 100
+        n_epochs = 400
+
+        logistic_regression(X_train, X_test, y_train, y_test, 
+                                M = M, n_epochs=n_epochs, plot_cost=True, save=True)
+
 
     # ------------ neural network
     if do_NN:
         print('\n ------- Neural network regession --------')
-        epochs = 50
-        batch_size = 40
-        eta = 1e-2
-        lmbd = 1e-3
-        n_categories = 2 #=1 when lin. reg
+        epochs = 200
+        batch_size = 100
+        eta = 0.001
+        lmbd = 1e-5
+        n_categories = 2
         n_hidden_layers = 1
-        #n_hidden_neurons = int(np.round(np.mean(n_categories + X_train.shape[1])))
-        #print('No of hidden neurons:',n_hidden_neurons)
-        #n_hidden_neurons = int(np.round(X_train.shape[0]/(2*(n_categories+X_train.shape[1]))))
-        #print('No of hidden neurons:',n_hidden_neurons)
-        n_hidden_neurons = int(np.round(2./3*X_train.shape[1]) + n_categories)
-        #print('No of hidden neurons:',n_hidden_neurons)
-        #sys.exit()
+
 
         n_hidden_neurons1 = int(np.floor(np.mean(n_categories + X_train.shape[1])))
         print('No of hidden neurons:',n_hidden_neurons1)
@@ -333,14 +325,14 @@ def main_logreg(remove_nan=True, remove_pay0=True, turn_dense=False, do_logreg=T
             epochs = 1000
             batch_size = 100
             
-            n_hidden_layers = 1
-            n_hidden_neurons = 1
+            
+            n_hidden_neurons = n_hidden_neurons3
             hidden_layer_sizes = n_hidden_layers*[n_hidden_neurons,]
             #hidden_layer_sizes = [n_hidden_neurons, int(np.round(n_hidden_neurons/2))]
             print('No of hidden neurons:', hidden_layer_sizes)
             init_method = 'Xavier'
-            out_activation = 'sigmoid'
-            hidden_activation = 'relu'
+            out_activation = 'softmax'
+            hidden_activation = 'sigmoid'
             cost_f = 'ce'
 
             y_train_onehot = OneHotEncoder(categories='auto').fit_transform(y_train).toarray()
@@ -363,7 +355,7 @@ def main_logreg(remove_nan=True, remove_pay0=True, turn_dense=False, do_logreg=T
             for i, eta in enumerate(eta_vals):
                 for j, lmbd in enumerate(lmbd_vals):
                     print('eta:',eta, 'lambda:', lmbd)
-                    dnn = aNeuralNetwork(X_train, y_train, eta=eta, lmbd=lmbd, epochs=epochs, batch_size=batch_size,
+                    dnn = aNeuralNetwork(X_train, y_train_onehot, eta=eta, lmbd=lmbd, epochs=epochs, batch_size=batch_size,
                                         n_hidden_neurons=hidden_layer_sizes, n_categories=n_categories, init_method=init_method,
                                         out_activation = out_activation, hidden_activation=hidden_activation, cost_f = cost_f)
 
@@ -388,7 +380,7 @@ def main_logreg(remove_nan=True, remove_pay0=True, turn_dense=False, do_logreg=T
                     test_auc[i][j] = area_ratio_test
                     #test_auc[i][j] = roc_auc_score(y_test, y_pred_NN)
 
-            arg_max = np.unravel_index(test_auc.argmax(), test_auc.shape)
+            arg_max = np.unravel_index(test_accuracy.argmax(), test_accuracy.shape)
             print('best param: eta:', eta_vals[arg_max[0]], 'lambda:',lmbd_vals[arg_max[1]])
             print('best accuracy test score:', test_accuracy[arg_max])
             print('best accuracy train score:', train_accuracy[arg_max])
@@ -429,54 +421,16 @@ def main_logreg(remove_nan=True, remove_pay0=True, turn_dense=False, do_logreg=T
             # --------- NN with scikit learn
             print('\n ---------- Neural Network classification sklearn')
             
-            batch_size = 40
+            batch_size = 100
             epochs=1000
-            #eta_vals = np.array([eta])
-            #lmbd_vals = np.array([lmbd])
-
-
-            eta_vals = np.logspace(-7, 0, 8)
-            lmbd_vals = np.logspace(-7, 0, 8)
             
-            hidden_size01 = (n_hidden_neurons1)
-            hidden_size02 = (n_hidden_neurons2)
-            hidden_size03 = (n_hidden_neurons3)
-
-            hidden_size1 = n_hidden_layers*(n_hidden_neurons1,) # (neurons,neurons,...)
-            hidden_size2 = (n_hidden_neurons1, int(np.round(n_hidden_neurons1/2)))
-
-            hidden_size3 = n_hidden_layers*(n_hidden_neurons2,) # (neurons,neurons,...)
-            hidden_size4 = (n_hidden_neurons2, int(np.round(n_hidden_neurons2/2)))
-
-            hidden_size5 = n_hidden_layers*(n_hidden_neurons3,) # (neurons,neurons,...)
-            hidden_size6 = (n_hidden_neurons3, int(np.round(n_hidden_neurons3/2)))
+            eta_vals = np.array([eta])
+            lmbd_vals = np.array([lmbd])
 
 
-            layers= [hidden_size01, hidden_size02, hidden_size03, hidden_size1, hidden_size3, hidden_size5]
-            #layers= [hidden_size01, hidden_size02, hidden_size03, hidden_size1, hidden_size2, hidden_size3, hidden_size4, hidden_size5, hidden_size6]
-            param_grid = [
-            {
-            'activation' : ['logistic', 'relu'],
-            'solver' : ['sgd'],
-            'hidden_layer_sizes': layers,
-            'alpha': lmbd_vals,
-            'learning_rate_init': eta_vals,
-            'batch_size': [40, 100, 500, 1000],
-            'max_iter': [300,2000]
-            }
-            ]
+            #eta_vals = np.logspace(-7, 0, 8)
+            #lmbd_vals = np.logspace(-7, 0, 8)
 
-            clf = GridSearchCV(MLPClassifier(), param_grid,
-                                    scoring=['accuracy','f1', 'roc_auc'], 
-                                    refit='f1')
-            clf.fit(X_train, y_train.ravel())
-            #clf.predict(X_test)
-
-
-            print("Best parameters set found on development set:")
-            print(clf.best_params_)
-
-            sys.exit()
             # store models for later use
             DNN_sk = np.zeros((len(eta_vals), len(lmbd_vals)), dtype=object)
             
@@ -486,6 +440,7 @@ def main_logreg(remove_nan=True, remove_pay0=True, turn_dense=False, do_logreg=T
             train_auc = np.zeros((len(eta_vals), len(lmbd_vals)))
             test_auc = np.zeros((len(eta_vals), len(lmbd_vals)))
             
+            n_hidden_neurons = n_hidden_neurons3
             hidden_layer_sizes = n_hidden_layers*(n_hidden_neurons,) # (neurons,neurons,...)
             print('No of hidden neurons:', hidden_layer_sizes)
 
@@ -547,6 +502,6 @@ def main_logreg(remove_nan=True, remove_pay0=True, turn_dense=False, do_logreg=T
                                     yticks=eta_vals, xlab=r'$\lambda$', ylab=r'$\eta$')
 
 
-main_logreg(remove_nan=True, remove_pay0=False, turn_dense=False, do_logreg=True, 
-            do_NN=False, do_NN_np=True, do_NN_sk=False, 
-            plot_cumgain_test=True, vizualize_scores=False)
+main_logreg(remove_pay0=True, resample=True, turn_dense=False, do_logreg=False, 
+            do_NN=True, do_NN_np=True, do_NN_sk=False, 
+            plot_cumgain_test=False, vizualize_scores=True)

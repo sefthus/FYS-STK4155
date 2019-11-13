@@ -71,7 +71,7 @@ class LogisticRegressor:
         prob_y = self.predict_probabilities_numpy(X)[:,1]
 
         # round up or down y_pred to get on binary form
-        y_pred = np.zeros_like(prob_y)
+        y_pred = np.zeros(len(prob_y))
         y_pred[prob_y >= 0.5] = 1
         y_pred[prob_y < 0.5] = 0
 
@@ -100,7 +100,7 @@ class LogisticRegressor:
         #eta_j= 0.001 # use as constant
 
         for epoch in range(1, self.n_epochs+1):
-            X, y = shuffle(self.X_train, self.y_train)
+            X, y = shuffle(self.X_train, self.y_train, random_state=0)
             
             for k in range(m):
                 #k = i#np.random.randint(m) # pick random kth minibatch
@@ -115,9 +115,9 @@ class LogisticRegressor:
                 sigmoid = expit(Xk.dot(beta))
                 sigmoid_min = expit(-Xk.dot(beta)) # =1-sigmoid(x) = sigmoid(-x) 
                 
-                #self.cost_epoch[epoch-1] += -np.sum( xlogy(yk, sigmoid) + xlogy((1-yk),sigmoid_min))
+                self.cost_epoch[epoch-1] += -np.sum( xlogy(yk, sigmoid) + xlogy((1-yk),sigmoid_min))
                 
-                self.cost_epoch[epoch-1] += -np.sum( yk*np.log(sigmoid) + (1-yk)*np.log(sigmoid_min) )
+                #self.cost_epoch[epoch-1] += -np.sum( yk*np.log(sigmoid) + (1-yk)*np.log(sigmoid_min) )
                 
                 gradient = - Xk.T.dot(yk - sigmoid)
 

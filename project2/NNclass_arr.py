@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.special import expit
+from scipy.special import xlogy, xlog1py, expit
 from sklearn.utils import shuffle
 np.random.seed(3155)
 import sys
@@ -72,12 +72,6 @@ class NeuralNetwork:
             self.output_weights = np.random.randn(self.n_hidden_neurons[-1], self.n_categories)*np.sqrt(1/self.sizes[-1])
             self.output_bias = np.random.randn(1, self.n_categories) + 0.01
 
-    '''
-    def sigmoid(self, x):
-        return 0.5*(np.tanh(x/2.) + 1)
-        #return expit(x)
-    #    return 1 / (1 + np.exp(-x))
-    '''
     def sigmoid(self,x):
         """Numerically stable sigmoid function."""
         return np.where(x >= 0, 
@@ -101,7 +95,7 @@ class NeuralNetwork:
 
     def softmax(self,x):
         """ subtract max(x_col) to prevent overflow """
-        exp_term = np.exp(x-np.max(x, axis=1))
+        exp_term = np.exp(x-np.max(x, axis=0))
         return exp_term/np.sum(exp_term, axis=1, keepdims=True)
 
     def mean_squared_error(self, y_true, y_pred):
@@ -111,8 +105,9 @@ class NeuralNetwork:
     def cross_entropy(self, y_true, y_pred):
         #y_pred_min = self.sigmoid(-x) #=1-sigmoid(x) = sigmoid(-x)
         y_pred_min = 1 - y_pred 
-
-        return -np.sum(y_true*np.log(y_pred) + (1-y_true)*np.log(y_pred_min))
+        return -np.sum( xlogy(y_true, y_pred) + xlogy((1-y_true),y_pred))
+                
+        #return -np.sum(y_true*np.log(y_pred) + (1-y_true)*np.log(y_pred_min))
 
 
 
@@ -138,10 +133,10 @@ class NeuralNetwork:
         # should define cost function and its derivative
 
         cost_f_options = {
-                'mse': [self.mean_squared_error, self.grad_beta_mean_squared_error], # regression
-                'ce': [self.cross_entropy, self.grad_beta_cross_entropy] # classification
+                'mse': self.mean_squared_error, # regression
+                'ce': self.cross_entropy # classification
                 }
-        self.cost, self.cost_deriv = cost_f_options[self.cost_f_key]
+        self.cost = cost_f_options[self.cost_f_key]
 
 
     def feed_forward(self):
@@ -156,11 +151,6 @@ class NeuralNetwork:
 
         self.z_o = np.matmul(self.a_h[self.n_hidden_layers], self.output_weights) + self.output_bias
         self.a_o = self.a_o_f(self.z_o)
-        #self.a_h[self.n_hidden_layers+1]
-        #print('z_h:', self.z_h)
-        #print('a_h:', self.a_h)
-        #print('w_h:', self.hidden_weights)
-        #sys.exit()
 
     def feed_forward_out(self, X):
         # feed-forward for output
@@ -182,23 +172,9 @@ class NeuralNetwork:
 
         nh = self.n_hidden_layers
         # --------- dz[nh+1] = self.a[nh+1] - y = probabilities - Y.data
-        #error_output = self.probabilities - self.Y_data
         error_output = self.a_o - self.Y_data # 
         # ------------- dz[nh] = da.T*sigmoid_grad(a_h[nh])
-        #print('e_out',error_output)
-        #print('a_o',self.a_o)
-        #print('w_out',self.output_weights)
 
-
-        #if np.isnan(error_output).any() or np.isnan(self.output_weights).any():
-            #print('e_out',error_output)
-            #print('w_out',self.output_weights)
-            #print('w_h grad:', self.hidden_weights_gradient)
-            #print('b_h grad:', self.hidden_bias_gradient)
-            #print('w_o grad:', self.output_weights_gradient)
-            #print('b_o grad:', self.output_bias_gradient)
-        #    sys.exit()
-            
         error_hidden = error_output.dot(self.output_weights.T) * self.a_h_deriv(self.z_h[nh])#self.a_h[nh] * (1 - self.a_h[nh])
 
         # ---------- dW[nhs+1] = a_h[nh].T.dot(dz[nh+1])
@@ -210,49 +186,29 @@ class NeuralNetwork:
         self.hidden_bias_gradient = np.zeros(nh+1, dtype=np.ndarray)  # db_h
         self.dz_h = np.zeros(nh+1, dtype=np.ndarray)
         self.da_h = np.zeros(nh+1, dtype=np.ndarray)
-        
-        #self.dz[nh+1] = error_output
+
         self.dz_h[nh] = error_hidden
 
-        #self.da[nh+1] = self.dz[nh+1].dot(self.output_weights.T)
-        
         #---------- dW[nh] = a_h[hidden_layers-1].T.dot(dz[nh])
         self.hidden_weights_gradient[nh] = self.a_h[nh].T.dot(error_hidden)
         #----------- dB[nh] = np.sum(dz[nh], axis=0)
         self.hidden_bias_gradient[nh] = np.sum(error_hidden, axis=0)
-        #self.da_h[nh] = self.dz_h[nh+1].dot(self.hidden_weights[nh+1].T)
-        #self.da_h[nh] = error_output.dot(self.output_weights.T)
-        
+  
         for i in range(nh, 0, -1):
             self.hidden_weights_gradient[i] = self.a_h[i-1].T.dot(self.dz_h[i])
             self.hidden_bias_gradient[i] = np.sum(self.dz_h[i], axis=0)
             self.da_h[i-1] = self.dz_h[i].dot(self.hidden_weights[i].T)
             #self.dz_h[i-1] = self.da_h[i-1]*(self.a_h[i-1]*(1-self.a_h[i-1]))
             self.dz_h[i-1] = self.da_h[i-1]*self.a_h_deriv(self.z_h[i-1])
-            # DONE: change sigmoid when doing lin. reg in dz_h
-        
-        #print('dz grad', self.dz_h)
-
-
+            
         if self.lmbd > 0.0:
             self.output_weights_gradient += self.lmbd * self.output_weights
             self.hidden_weights_gradient = self.lmbd * self.hidden_weights
-        
-        #print('w_h grad:', self.hidden_weights_gradient)
-        #print('b_h grad:', self.hidden_bias_gradient)
-        #print('w_o grad:', self.output_weights_gradient)
-        #print('b_o grad:', self.output_bias_gradient)
-
+    
         self.output_weights -= self.eta * self.output_weights_gradient
         self.output_bias -= self.eta * self.output_bias_gradient
         self.hidden_weights -= self.eta * self.hidden_weights_gradient
         self.hidden_bias -= self.eta * self.hidden_bias_gradient
-        #print('eta', self.eta)
-        #print('w_h:', self.hidden_weights)
-        #print('b_h:', self.hidden_bias)
-        #print('w_o:', self.output_weights)
-        #print('b_o:', self.output_bias)
-        #sys.exit()
 
     def predict(self, X):
         probabilities = self.feed_forward_out(X)
