@@ -203,7 +203,7 @@ class NeuralNetwork:
             
         if self.lmbd > 0.0:
             self.output_weights_gradient += self.lmbd * self.output_weights
-            self.hidden_weights_gradient = self.lmbd * self.hidden_weights
+            self.hidden_weights_gradient += self.lmbd * self.hidden_weights #bug fix, missing +
     
         self.output_weights -= self.eta * self.output_weights_gradient
         self.output_bias -= self.eta * self.output_bias_gradient
